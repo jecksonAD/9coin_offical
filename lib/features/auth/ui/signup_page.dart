@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/auth/ui/login_page.dart';
@@ -9,6 +10,7 @@ import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/create_account.dart';
 import 'package:ninecoin/utilities/dialogs/successful_create.dart';
 import 'package:ninecoin/widgets/form_messages.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../utilities/dialogs/error_dialoge.dart';
 import '../services/auth.dart';
 
@@ -26,7 +28,6 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
-
 class _SignupPageState extends State<SignupPage> {
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -43,12 +44,9 @@ class _SignupPageState extends State<SignupPage> {
   final _emailFormFieldKey = GlobalKey<FormFieldState>();
   String? emails;
   bool isLoading = false;
-    String deviceTokenToSendPushNotification = "";
+  String deviceTokenToSendPushNotification = "";
 
-
-
-
-   void initState() {
+  void initState() {
     FirebaseMessaging.onMessage.listen((message) {
       print('Firebase');
       if (message.notification != null) {
@@ -67,7 +65,6 @@ class _SignupPageState extends State<SignupPage> {
     deviceTokenToSendPushNotification = token.toString();
     print("Token Value $deviceTokenToSendPushNotification");
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -620,8 +617,19 @@ class _TermsAndConditionState extends State<_TermsAndCondition> {
                 style: CoinTextStyle.title3,
                 children: [
                   TextSpan(
-                      text: " Term & privacy policy.",
-                      style: CoinTextStyle.orangeTitle3)
+                    text: " Term & privacy policy.",
+                    style: CoinTextStyle.orangeTitle3,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        String url =
+                            "http://admindashboard.9ninecoms.com/termandcondition";
+                        if (!await launchUrl(
+                          Uri.parse(url),
+                          mode: LaunchMode.externalApplication,
+                        )) {}
+                        throw 'Could not launch $url';
+                      },
+                  )
                 ]),
           ),
         ),
