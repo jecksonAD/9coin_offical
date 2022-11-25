@@ -7,6 +7,9 @@ import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/new_password_reset.dart';
 import 'package:ninecoin/utilities/dialogs/password_reset.dart';
 
+import '../../../utilities/dialogs/email_verification.dart';
+import '../../../utilities/dialogs/email_verification_bar.dart';
+
 class VerificationPage extends StatefulWidget {
   static Route route({required String email}) {
     return MaterialPageRoute(
@@ -67,14 +70,13 @@ class _VerificationPageState extends State<VerificationPage> {
                   ElevatedButton(
                     onPressed: () async {
                       print(emailController.text);
-                      if (await showResetPasswordDialog(context)) {
+                      if (await showEmailVerification(context)) {
                         Verification(
                                 email: widget.email,
                                 verificationcode: emailController.text)
                             .then((value) async {
-                          print(value);
-                          if (await showNewPasswordResetDialog(
-                              context, value)) {
+                          print('verification' + value);
+                          if (await showNewVerificationDialog(context, value)) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

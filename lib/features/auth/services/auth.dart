@@ -35,19 +35,21 @@ Future<String> loginUser(
     required String device_id}) async {
   String url = Api.login;
   var uri = Uri.parse(url);
-  print("tokenss" + device_id);
+
   var response = await http.post(uri,
       headers: {"Content-Type": "application/json"},
       body: json.encode(
           {"email": email, "password": password, "device_id": device_id}));
-
+  print("statuscode" + json.decode(response.body)["status_code"].toString());
   if (response.statusCode == 200 || response.statusCode == 201) {
-    LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
+    if (json.decode(response.body)["status_code"] == 200) {
+      LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
 
-    setLoginUserInfo(user);
-    return "Success";
-  } else if (response.statusCode == 303) {
-    return "verification needed";
+      setLoginUserInfo(user);
+      return "Success";
+    } else {
+      return "verification needed";
+    }
   } else {
     throw json.decode(response.body)["error"];
   }
@@ -55,9 +57,9 @@ Future<String> loginUser(
 
 Future<String> Verification(
     {required String email, required String verificationcode}) async {
-  String url = Api.login;
+  String url = Api.verification;
   var uri = Uri.parse(url);
-
+  print('testing' + email + verificationcode);
   var response = await http.post(uri,
       headers: {"Content-Type": "application/json"},
       body: json.encode({
@@ -66,12 +68,14 @@ Future<String> Verification(
       }));
 
   if (response.statusCode == 200 || response.statusCode == 201) {
-    LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
+    if (json.decode(response.body)["status_code"] == 200) {
+      LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
 
-    setLoginUserInfo(user);
-    return "Success";
-  } else if (response.statusCode == 303) {
-    return "Wrong Verification Code";
+      setLoginUserInfo(user);
+      return "Success";
+    } else {
+      return "Wrong Verification Code";
+    }
   } else {
     throw json.decode(response.body)["error"];
   }

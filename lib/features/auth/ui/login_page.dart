@@ -143,6 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                                     device_id:
                                         deviceTokenToSendPushNotification)
                                 .then((value) async {
+                              print('status' + value);
                               if (value == "Success") {
                                 setState(() {
                                   isLoading = false;
