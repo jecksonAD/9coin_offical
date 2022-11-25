@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/auth/ui/forgot_password_page.dart';
 import 'package:ninecoin/features/auth/ui/signup_page.dart';
+import 'package:ninecoin/features/auth/ui/verification_page.dart';
 import 'package:ninecoin/features/home/ui/home_page.dart';
 import 'package:ninecoin/features/home/ui/home_view.dart';
 import 'package:ninecoin/typography/text_styles.dart';
@@ -131,27 +132,42 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          getDeviceTokenToSendNotification();
-                          setState(() {
-                            isLoading = true;
-                          });
-                          loginUser(email: email.text, password: password.text,device_id: deviceTokenToSendPushNotification)
-                              .then((value) async {
+                          getDeviceTokenToSendNotification().then((value) {
                             setState(() {
-                              isLoading = false;
+                              isLoading = true;
                             });
-                            if (await showSuccessfulLoginAccountDialog(
-                                context)) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const HomePage()));
-                            } else {}
-                          }).catchError((err) async {
-                            setState(() {
-                              isLoading = false;
+
+                            loginUser(
+                                    email: email.text,
+                                    password: password.text,
+                                    device_id:
+                                        deviceTokenToSendPushNotification)
+                                .then((value) async {
+                              if (value == "Success") {
+                                setState(() {
+                                  isLoading = false;
+                                });
+
+                                if (await showSuccessfulLoginAccountDialog(
+                                    context)) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => const HomePage()));
+                                }
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => VerificationPage(
+                                            email: email.text)));
+                              }
+                            }).catchError((err) async {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              await showErrorDialog(context, "Error", "$err");
                             });
-                            await showErrorDialog(context, "Error", "$err");
                           });
                         },
                         child: isLoading

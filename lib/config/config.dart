@@ -43,9 +43,11 @@ class Api {
   static const _buypointpackage = "/buypointpackage";
   static const _banner = "/banner";
   static const _searchmerchant = "/SearchMerchant";
+  static const _verification = "/verification";
 
   static String baseUrl = "$_base$_api";
   static String login = "$_base$_api$_login";
+  static String verification = "$_base$_api$_verification";
   static String register = "$_base$_api$_register";
   static String getPdf = "$_base$_api$_getPdf";
   static String getLuckyDraw = "$_base$_api$_luckyDraw";

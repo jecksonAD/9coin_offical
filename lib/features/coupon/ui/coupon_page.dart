@@ -41,16 +41,6 @@ class _CouponPageState extends State<CouponPage>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          color: CoinColors.mediumBlack,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: const TextField(
-            decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: "Search",
-            ),
-          ),
-        ),
         TabBar(
           padding: const EdgeInsets.only(bottom: 12),
           unselectedLabelColor: CoinColors.black54,

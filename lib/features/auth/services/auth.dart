@@ -30,19 +30,48 @@ Future<RegisterResponse> registerUser(
 }
 
 Future<String> loginUser(
-    {required String email, required String password, required String device_id}) async {
+    {required String email,
+    required String password,
+    required String device_id}) async {
   String url = Api.login;
   var uri = Uri.parse(url);
-
+  print("tokenss" + device_id);
   var response = await http.post(uri,
       headers: {"Content-Type": "application/json"},
-      body: json.encode({"email": email, "password": password,"device_id":device_id}));
+      body: json.encode(
+          {"email": email, "password": password, "device_id": device_id}));
 
   if (response.statusCode == 200 || response.statusCode == 201) {
     LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
 
     setLoginUserInfo(user);
     return "Success";
+  } else if (response.statusCode == 303) {
+    return "verification needed";
+  } else {
+    throw json.decode(response.body)["error"];
+  }
+}
+
+Future<String> Verification(
+    {required String email, required String verificationcode}) async {
+  String url = Api.login;
+  var uri = Uri.parse(url);
+
+  var response = await http.post(uri,
+      headers: {"Content-Type": "application/json"},
+      body: json.encode({
+        "email": email,
+        "verifcode": verificationcode,
+      }));
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
+
+    setLoginUserInfo(user);
+    return "Success";
+  } else if (response.statusCode == 303) {
+    return "Wrong Verification Code";
   } else {
     throw json.decode(response.body)["error"];
   }
