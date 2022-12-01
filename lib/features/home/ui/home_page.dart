@@ -12,6 +12,7 @@ import 'package:ninecoin/features/home/components/tab_item.dart';
 import 'package:ninecoin/features/notification/ui/notifications_page.dart';
 import 'package:ninecoin/model/news/news_model.dart';
 import 'package:ninecoin/typography/text_styles.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../model/notification/notification_model.dart';
 import '../../category/api/merchant.dart';
 import '../../category/ui/category_details_page.dart';
@@ -59,6 +60,7 @@ class _HomePageState extends State<HomePage> {
     NewsPage(),
   ];
 
+// bool _enablePullDown = true;
   @override
   void initState() {
     FirebaseMessaging.onMessage.listen((message) {
@@ -83,6 +85,37 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+    // setState(() {
+    //       // HomeScreen();
+
+    // });q
+//
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              HomePage()), // this mainpage is your page to refresh
+      (Route<dynamic> route) => false,
+    );
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+  }
+
   @override
   Widget build(BuildContext context) {
     getDeviceTokenToSendNotification();
@@ -90,7 +123,7 @@ class _HomePageState extends State<HomePage> {
         future: getNotification(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Scaffold(
+            return Scaffold(
               body: Center(
                 child: CircularProgressIndicator(
                   color: CoinColors.white,
@@ -102,6 +135,7 @@ class _HomePageState extends State<HomePage> {
           return WillPopScope(
             onWillPop: () async => false,
             child: Scaffold(
+              key: _scaffoldKey,
               bottomNavigationBar: MyBottomNavigationBar(
                 onSelectTab: (index) {
                   setState(() {
@@ -149,6 +183,19 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: CoinColors.black12,
               body: pages[currentPage],
             ),
+            backgroundColor: CoinColors.black12,
+            body: SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                enablePullUp: true,
+                footer: CustomFooter(
+                  builder: (context, mode) {
+                    return HomeScreen();
+                  },
+                ),
+                child: pages[currentPage]),
           );
         });
   }
@@ -258,6 +305,7 @@ class HomeScreen extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.push(context, CategoryListPage.rout());
+                          // Navigator.push(context, CategoryListPage.rout());
                         },
                         child: Text("View all",
                             style: CoinTextStyle.title3
