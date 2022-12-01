@@ -126,16 +126,20 @@ class ProductDetails extends StatelessWidget {
                     style: CoinTextStyle.title2Bold
                         .copyWith(color: CoinColors.orange),
                   ),
+                  const SizedBox(height: 3),
                   Text(
                     snapshot.data![index]['email'],
                     style: CoinTextStyle.title4,
                   ),
+                  const SizedBox(height: 3),
                   Text(
                     snapshot.data![index]['phone'],
                     style: CoinTextStyle.title4,
                   ),
+                  const SizedBox(height: 3),
                   Text(
                     snapshot.data![index]['address'],
+                    textAlign: TextAlign.center,
                     style: CoinTextStyle.title4,
                   ),
                   const SizedBox(height: 16),
@@ -149,7 +153,7 @@ class ProductDetails extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     snapshot.data![index]['description'],
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                     style: CoinTextStyle.title3,
                   ),
                   const SizedBox(height: 12),
@@ -160,27 +164,32 @@ class ProductDetails extends StatelessWidget {
                     style: CoinTextStyle.title3Bold
                         .copyWith(color: CoinColors.orange),
                   ),
-                  Column(
-                    children: <Widget>[
-                      for (int i = 0;
-                          i < snapshot.data![index]['servicecount'];
-                          i++)
-                        Column(
-                          children: [
-                            const SizedBox(height: 6),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                  snapshot.data![index]
-                                      ['service_' + i.toString()],
-                                  style: CoinTextStyle.title4.copyWith(
-                                    letterSpacing: 0.5,
-                                  )),
-                            ),
-                            const SizedBox(height: 6),
-                          ],
-                        )
-                    ],
+                  Container(
+                    width: 300,
+                    child: Column(
+                      children: <Widget>[
+                        for (int i = 0;
+                            i < snapshot.data![index]['servicecount'];
+                            i++)
+                          Column(
+                            children: [
+                              const SizedBox(height: 6),
+                              Container(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                      snapshot.data![index]
+                                          ['service_' + i.toString()],
+                                      style: CoinTextStyle.title4.copyWith(
+                                        letterSpacing: 0.5,
+                                      )),
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                            ],
+                          )
+                      ],
+                    ),
                   ),
                 ]);
               });

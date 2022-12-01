@@ -57,11 +57,11 @@ class _RedeemedCardDetailsPageState extends State<RedeemedCardDetailsPage> {
                     const SizedBox(height: 8.0),
                     const Divider(),
                     const SizedBox(height: 8.0),
-                    Text("Redeemed Date", style: CoinTextStyle.orangeTitle3),
-                    const SizedBox(height: 6.0),
-                    Text("23/4/2022", style: CoinTextStyle.title3),
-                    const SizedBox(height: 6.0),
-                    const Divider(),
+                    //   Text("Redeemed Date", style: CoinTextStyle.orangeTitle3),
+                    //  const SizedBox(height: 6.0),
+                    //  Text("23/4/2022", style: CoinTextStyle.title3),
+                    // const SizedBox(height: 6.0),
+                    //const Divider(),
                     RichText(
                       text: TextSpan(
                         text: "Total :",
@@ -90,10 +90,30 @@ class _RedeemedCardDetailsPageState extends State<RedeemedCardDetailsPage> {
                     Text("Term and Condition",
                         style: CoinTextStyle.orangeTitle3),
                     const SizedBox(height: 6.0),
-                    Text(
-                        '''1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\n2. Proin et orci in quam porta condimentum. Mauris non ligula tempus, lacinia velit a, aliquam metus. \n\n3. Nulla atone sapien scelerisque, imperdiet exq non, venenatis mi.
-      ''',
-                        style: CoinTextStyle.title3.copyWith()),
+
+                    Column(
+                      children: <Widget>[
+                        for (int i = 0;
+                            i < snapshot.data![0]['servicecount'];
+                            i++)
+                          Column(
+                            children: [
+                              const SizedBox(height: 6),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    snapshot.data![0]
+                                        ['service_' + i.toString()],
+                                    style: CoinTextStyle.title3.copyWith(
+                                      letterSpacing: 0.5,
+                                    )),
+                              ),
+                              const SizedBox(height: 6),
+                            ],
+                          )
+                      ],
+                    ),
+
                     const Divider(),
                     const SizedBox(height: 8.0),
                     Row(

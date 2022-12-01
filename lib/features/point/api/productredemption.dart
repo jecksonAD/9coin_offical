@@ -37,7 +37,8 @@ class ProductRedeem {
       var response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        // print(jsonDecode(response.body));
+        return jsonDecode(response.body)['data']['message'];
       } else {
         return Future.error("Server Error");
       }

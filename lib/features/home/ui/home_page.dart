@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:badges/badges.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                           context, NotificationPage.route(notification!));
                     },
-                    icon: Badge(
+                    icon: badge.Badge(
                       padding: const EdgeInsets.all(4),
                       position: BadgePosition.topEnd(top: -2, end: -8),
                       badgeContent: Text(notification!.data.length.toString(),

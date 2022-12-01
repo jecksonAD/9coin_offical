@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ninecoin/features/lucky_draw/components/drawn_tile_win.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -54,7 +55,7 @@ class _LuckyDrawWin extends State<LuckyDrawWin> {
                             snapshot.data![index]['luckydrawid'].toString()),
                         builder: (context, indexx) {
                           if (indexx.hasData) {
-                            return DrawnTile(
+                            return DrawnTileWin(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => DrawnDetailsPage(

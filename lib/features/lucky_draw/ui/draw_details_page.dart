@@ -115,18 +115,18 @@ class _DrawDetailsPageState extends State<DrawDetailsPage> {
                     const SizedBox(height: 10.0),
                     const Divider(),
                     const SizedBox(height: 10.0),
-                    Text("Term and Condition",
+                    /*  Text("Term and Condition",
                         style: CoinTextStyle.orangeTitle3),
                     const SizedBox(height: 6.0),
                     const Text(
                       '''1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\n2. Proin et orci in quam porta condimentum. Mauris non ligula tempus, lacinia velit a, aliquam metus. \n\n3. Nulla atone sapien scelerisque, imperdiet exq non, venenatis mi.
                     ''',
-                    ),
+                    ),*/
                     const Divider(),
                     const SizedBox(height: 10.0),
-                    Text("Draw in Imperdiet Ex Non",
-                        style: CoinTextStyle.orangeTitle3),
-                    const SizedBox(height: 16.0),
+                    /* Text("Draw in Imperdiet Ex Non",
+                        style: CoinTextStyle.orangeTitle3),*/
+                    //const SizedBox(height: 16.0),
                     SizedBox(
                       width: 200,
                       child: Row(

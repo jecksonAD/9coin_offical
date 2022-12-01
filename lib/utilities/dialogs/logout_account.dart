@@ -8,8 +8,7 @@ Future<bool> showLogoutAccountDialog(BuildContext context) {
     context: context,
     imageUrl: Assets.logout,
     title: "Logout Your Account?",
-    content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+    content: "Dear User ,Are You Comfirm Want To Logout",
     optionsBuilder: () => {
       "Cancel": false,
       "Confirm": true,

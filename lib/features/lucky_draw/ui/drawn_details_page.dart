@@ -42,7 +42,7 @@ class _DrawnDetailsPageState extends State<DrawnDetailsPage> {
   @override
   void initState() {
     super.initState();
-    print("init");
+
     getLuckyDrawInfo(widget.Luckydrawid).then((value) {
       luckyDrawResponse = value;
       LuckyDrawname = luckyDrawResponse.data[0].name;
@@ -52,7 +52,6 @@ class _DrawnDetailsPageState extends State<DrawnDetailsPage> {
       reward = luckyDrawResponse.data[0].prize;
       drawn = luckyDrawResponse.data[0].drawnstatus;
 
-      print(drawn);
       getLuckyDrawListInfo(widget.LuckrdrawListid).then((value) {
         luckyDrawListResponse = value;
 

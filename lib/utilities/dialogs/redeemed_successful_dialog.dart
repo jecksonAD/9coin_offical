@@ -3,15 +3,14 @@ import 'package:ninecoin/assets/assets.dart';
 
 import 'generic_dialog.dart';
 
-Future<bool> showRedeemedSuccessfulDialog(BuildContext context) {
+Future<bool> showRedeemedSuccessfulDialog(BuildContext context, String value) {
   return showGenericDialog<bool>(
     context: context,
     imageUrl: Assets.updated,
     title: "Redeemed Successful!",
-    content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+    content: value,
     optionsBuilder: () => {
-      "Back": false,
+      "Ok": false,
     },
   ).then(
     (value) => value ?? false,

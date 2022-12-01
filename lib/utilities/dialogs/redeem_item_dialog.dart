@@ -8,8 +8,7 @@ Future<bool> showRedeemItemDialog(BuildContext context) {
     context: context,
     imageUrl: Assets.redeem,
     title: "Redeem Item?",
-    content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+    content: "Please Comfirm, The item Redeen was not refundable",
     optionsBuilder: () => {
       "Back": false,
       "Redeem": true,

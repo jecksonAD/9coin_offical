@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badge;
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
@@ -37,7 +38,7 @@ class NotificationPage extends StatelessWidget {
             itemBuilder: (context, index) {
               return NotificationTile(
                 icon: CircleNotificationIcon(
-                    icon: Badge(
+                    icon: badge.Badge(
                       position: BadgePosition.topEnd(top: -2),
                       child: const Icon(
                         Icons.notifications,

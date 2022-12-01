@@ -22,7 +22,8 @@ class DiscountCouponCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    final double rate =
+        100 - double.parse(promopoint) / double.parse(originalpoint) * 100;
     return InkWell(
       onTap: onTap,
       child: Stack(children: [
@@ -62,14 +63,12 @@ class DiscountCouponCard extends StatelessWidget {
                             color: Color(0xff70bea4),
                             fontWeight: FontWeight.bold),
                       ),
-                       SizedBox(
+                      SizedBox(
                         height: size.height * 0.01,
                       ),
-                    
-                     
                       Row(
                         children: [
-                        const  Text(
+                          const Text(
                             'Point:',
                             style: TextStyle(
                               fontSize: 11,
@@ -78,7 +77,7 @@ class DiscountCouponCard extends StatelessWidget {
                           ),
                           Text(
                             promopoint,
-                            style:const TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Color(0xff70bea4),
                             ),
@@ -94,12 +93,11 @@ class DiscountCouponCard extends StatelessWidget {
                           color: Color(0xff70bea4),
                         ),
                       ),
-                
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           const Padding(
-                            padding:  EdgeInsets.only(top: 6),
+                            padding: EdgeInsets.only(top: 6),
                             child: Text(
                               'SAVE',
                               style: TextStyle(
@@ -111,8 +109,8 @@ class DiscountCouponCard extends StatelessWidget {
                           SizedBox(
                             width: size.width * 0.01,
                           ),
-                          const Text(
-                            '20%',
+                          Text(
+                            rate.toStringAsFixed(0) + "%",
                             style: TextStyle(
                               fontSize: 18.1,
                               fontWeight: FontWeight.bold,

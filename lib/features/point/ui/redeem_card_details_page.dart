@@ -3,6 +3,8 @@ import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
 import 'package:ninecoin/features/point/api/productredemption.dart';
+import 'package:ninecoin/features/point/ui/redeemtions_page.dart';
+import 'package:ninecoin/main.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/redeem_item_dialog.dart';
 import 'package:ninecoin/utilities/dialogs/redeemed_successful_dialog.dart';
@@ -127,8 +129,13 @@ class _RedeemCardDetailsPageState extends State<RedeemCardDetailsPage> {
                             getdata
                                 .buyproduct(Userid, widget.id.toString())
                                 .then((value) async {
-                              if (await showRedeemedSuccessfulDialog(
-                                  context)) {}
+                              print(value);
+
+                              await showRedeemedSuccessfulDialog(context, value)
+                                  .then((value) {
+                                Navigator.push(
+                                    context, RedeemtionsPage.route());
+                              });
                             });
                           }
                         },

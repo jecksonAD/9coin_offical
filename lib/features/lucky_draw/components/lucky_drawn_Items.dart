@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ninecoin/colors/colors.dart';
+import 'package:ninecoin/features/lucky_draw/components/my_timer_drawall..dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,7 +19,10 @@ class LuckyDrwanItems extends StatefulWidget {
 
 class _LuckyDrwanItemsState extends State<LuckyDrwanItems> {
   String? userId;
+  List<String> lukcydrawid = [];
+  int? win = 0;
   late LuckyDrawnResponse luckyDrawn;
+  Luckydraw updatestatus = Luckydraw();
   Luckydraw getdata = new Luckydraw();
   @override
   void initState() {
@@ -55,6 +60,9 @@ class _LuckyDrwanItemsState extends State<LuckyDrwanItems> {
                               snapshot.data![index]['luckydrawid'].toString()),
                           builder: (context, indexx) {
                             if (indexx.hasData) {
+                              lukcydrawid
+                                  .add(snapshot.data![index]['id'].toString());
+
                               return DrawnTile(
                                 onTap: () {},
                                 luckydrawid: snapshot.data![index]
@@ -82,20 +90,49 @@ class _LuckyDrwanItemsState extends State<LuckyDrwanItems> {
                 }
               }),
       floatingActionButton:
+
           // FloatingActionButton(
           //   onPressed: () {},
           // child:
-          Container(
-        alignment: Alignment.center,
-        height: 40,
-        width: 120,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Color(0xffFCBA56),
-        ),
-        child: Text(
-          'Draw All',
-          style: TextStyle(fontSize: 18),
+          InkWell(
+        onTap: () async {
+          if (lukcydrawid.length > 0) {
+            // print('size of ' + lukcydrawid.length.toString());
+            for (int i = 0; i < lukcydrawid.length; i++) {
+              // print('waht is this' + lukcydrawid[i].toString());
+              await getLuckyDrawListInfo(lukcydrawid[i]).then((value) {
+                //   print('waht is this' + value.data[0].winningstatus.toString());
+                updatestatus.updatedrawnstatus(lukcydrawid[i]);
+                if (value.data[0].winningstatus == 1) {
+                  win = 1;
+                  // print('trigger here');
+                }
+              });
+            }
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Dialog(
+                    alignment: Alignment.center,
+                    backgroundColor: CoinColors.transparent,
+                    child: DrawAll(win!),
+                  );
+                });
+            //  print('status' + win.toString());
+          }
+        },
+        child: Container(
+          alignment: Alignment.center,
+          height: 40,
+          width: 120,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Color(0xffFCBA56),
+          ),
+          child: Text(
+            'Draw All',
+            style: TextStyle(fontSize: 18),
+          ),
         ),
       ),
     );

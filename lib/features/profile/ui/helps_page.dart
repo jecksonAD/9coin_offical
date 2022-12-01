@@ -3,6 +3,7 @@ import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
 import 'package:ninecoin/typography/text_styles.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HelpsPage extends StatelessWidget {
   static Route<HelpsPage> route() {
@@ -42,7 +43,7 @@ class HelpsPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+                "For The Assistant, Please Contact Us",
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
@@ -55,7 +56,7 @@ class HelpsPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30),
                   child: Row(
                     children: [
-                      const Icon(Icons.whatsapp),
+                      const Icon(FontAwesomeIcons.whatsapp),
                       const SizedBox(width: 5),
                       Text("Chat with us on WhatsApp",
                           style: CoinTextStyle.title4Bold),

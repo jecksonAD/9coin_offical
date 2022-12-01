@@ -81,48 +81,34 @@ class _PurchasedCouponDetailsState extends State<PurchasedCouponDetails> {
                         ],
                       ),
                       const Divider(thickness: 2),
-                      Container(
-                        padding: const EdgeInsets.only(top: 7),
-                        height: 220,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Term and Condition",
-                              style: CoinTextStyle.title3Bold
-                                  .copyWith(color: CoinColors.orange),
-                            ),
-                            FutureBuilder<List>(
-                              future: getdata.GetTnC(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  print(snapshot.data?.length);
-                                  return Column(
-                                    children: <Widget>[
-                                      for (int i = 0;
-                                          i < snapshot.data!.length;
-                                          i++)
-                                        Column(
-                                          children: [
-                                            const SizedBox(height: 6),
-                                            Text(
-                                                snapshot.data![i]['description']
-                                                    .toString(),
-                                                style: CoinTextStyle.title4),
-                                            const SizedBox(height: 6),
-                                          ],
-                                        )
-                                    ],
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return const CircularProgressIndicator();
-                              },
-                            ),
-                          ],
-                        ),
+                      Text(
+                        "Term and Condition",
+                        style: CoinTextStyle.title3Bold
+                            .copyWith(color: CoinColors.orange),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          for (int i = 0;
+                              i < snapshot.data![0]['servicecount'];
+                              i++)
+                            Column(
+                              children: [
+                                Column(
+                                  children: [
+                                    const SizedBox(height: 6),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                          snapshot.data![0]
+                                              ['tnc_' + i.toString()],
+                                          style: CoinTextStyle.title4),
+                                    ),
+                                    const SizedBox(height: 6),
+                                  ],
+                                )
+                              ],
+                            )
+                        ],
                       ),
                       const Divider(thickness: 2),
                       Padding(
@@ -198,7 +184,7 @@ class _PurchasedCouponDetailsState extends State<PurchasedCouponDetails> {
                             .copyWith(color: CoinColors.orange),
                       ),
                       Text(
-                        "1/5/2022 - 31/5/2022",
+                        snapshot.data![0]['SEdate'].toString(),
                         textAlign: TextAlign.center,
                         style: CoinTextStyle.title3,
                       ),

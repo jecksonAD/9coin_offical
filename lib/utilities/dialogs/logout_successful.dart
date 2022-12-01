@@ -8,8 +8,7 @@ Future<bool> showSuccessfulLogoutDialog(BuildContext context) {
     context: context,
     imageUrl: Assets.updated,
     title: "Logout Successful!",
-    content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+    content: "Thank You See You Soon",
     optionsBuilder: () => {
       "Back": true,
     },

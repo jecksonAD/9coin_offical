@@ -226,6 +226,16 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const HomePage()));
+                        },
+                        child: Text("Take A Look On 9Com",
+                            style: CoinTextStyle.orangeTitle2),
+                      ),
                     ],
                   ),
                 ),
