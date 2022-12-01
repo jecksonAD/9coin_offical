@@ -10,6 +10,7 @@ import 'package:ninecoin/features/home/api/category.dart';
 import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
 import 'package:ninecoin/features/home/components/tab_item.dart';
 import 'package:ninecoin/features/notification/ui/notifications_page.dart';
+import 'package:ninecoin/main.dart';
 import 'package:ninecoin/model/news/news_model.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage> {
         currentPage = widget.page!;
       });
     }
+
     super.initState();
   }
 
@@ -99,13 +101,22 @@ class _HomePageState extends State<HomePage> {
 
     // });q
 //
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              HomePage()), // this mainpage is your page to refresh
-      (Route<dynamic> route) => false,
-    );
+    if (currentPage == 0) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => App(
+                page: 0,
+              )));
+    } else if (currentPage == 1) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => App(
+                page: 1,
+              )));
+    } else if (currentPage == 2) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => App(
+                page: 2,
+              )));
+    }
   }
 
   void _onLoading() async {
@@ -140,6 +151,7 @@ class _HomePageState extends State<HomePage> {
                 onSelectTab: (index) {
                   setState(() {
                     currentPage = index;
+                    print('current' + currentPage.toString());
                   });
                 },
                 currentTab: currentPage,
@@ -181,21 +193,14 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               backgroundColor: CoinColors.black12,
-              body: pages[currentPage],
+              body: SmartRefresher(
+                  enablePullDown: true,
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  enablePullUp: true,
+                  child: pages[currentPage]),
             ),
-            backgroundColor: CoinColors.black12,
-            body: SmartRefresher(
-                enablePullDown: true,
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                onLoading: _onLoading,
-                enablePullUp: true,
-                footer: CustomFooter(
-                  builder: (context, mode) {
-                    return HomeScreen();
-                  },
-                ),
-                child: pages[currentPage]),
           );
         });
   }
