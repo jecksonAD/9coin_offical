@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ninecoin">
+    package="com.evoweb.ninecom">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 

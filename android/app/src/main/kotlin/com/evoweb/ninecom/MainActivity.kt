@@ -1,4 +1,4 @@
-package com.example.ninecoin
+package com.evoweb.ninecom
 
 import io.flutter.embedding.android.FlutterActivity
 
