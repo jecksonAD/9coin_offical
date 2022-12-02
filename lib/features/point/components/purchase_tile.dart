@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 
@@ -46,14 +47,14 @@ class _PurchaseTileState extends State<PurchaseTile> {
             children: [
               Text("${widget.point} point", style: CoinTextStyle.orangeTitle3),
               const SizedBox(width: 10),
-              GestureDetector(
+              /*  GestureDetector(
                   onTap: () async {
                     String uri =
                         "https://9coin.s3.ap-southeast-1.amazonaws.com/Invoices/222321.pdf";
 
-                    downloadFile(uri, "test.pdf");
+                    await downloadFile(uri, "test.pdf");
                   },
-                  child: Image.asset(Assets.download, height: 15, width: 15)),
+                  child: Image.asset(Assets.download, height: 15, width: 15)),*/
             ],
           ),
         ),
@@ -65,10 +66,26 @@ class _PurchaseTileState extends State<PurchaseTile> {
 
   Future<void> downloadFile(uri, fileName) async {
     String savePath = await getFilePath(fileName);
+    print(savePath);
 
-    Dio dio = Dio();
+    /* final taskId = await FlutterDownloader.enqueue(
+      url: uri,
+      headers: {}, // optional: header send with url (auth token etc)
+      savedDir: savePath,
+      showNotification:
+          true, // show download progress in status bar (for Android)
+      openFileFromNotification:
+          true, // click on notification to open downloaded file (for Android)
+    );
+*/
+    /* Dio dio = Dio();
 
-    dio.download(uri, savePath);
+    dio.download(uri, savePath, onReceiveProgress: (received, total) {
+      if (total != -1) {
+        print((received / total * 100).toStringAsFixed(0) + "%");
+        //you can build progressbar feature too
+      } else {}
+    });*/
   }
 
   Future<String> getFilePath(uniqueFileName) async {
@@ -76,7 +93,7 @@ class _PurchaseTileState extends State<PurchaseTile> {
 
     Directory dir = await getApplicationDocumentsDirectory();
 
-    path = '${dir.path}/$uniqueFileName.pdf';
+    path = '${dir.path}';
 
     return path;
   }

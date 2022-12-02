@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
+import 'package:ninecoin/features/api/tnc.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 
-class LuckDrawInformationPage extends StatelessWidget {
+class LuckDrawInformationPage extends StatefulWidget {
   static Route<LuckDrawInformationPage> route() {
     return MaterialPageRoute(
         builder: (context) => const LuckDrawInformationPage());
   }
 
   const LuckDrawInformationPage({Key? key}) : super(key: key);
+
+  @override
+  State<LuckDrawInformationPage> createState() =>
+      _LuckDrawInformationPageState();
+}
+
+class _LuckDrawInformationPageState extends State<LuckDrawInformationPage> {
+  Tnc getdata = new Tnc();
 
   @override
   Widget build(BuildContext context) {
@@ -25,54 +34,55 @@ class LuckDrawInformationPage extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "How To Use a Lucky Draw",
-                  style: CoinTextStyle.title2Bold.copyWith(
-                    color: CoinColors.orange,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Text(
-                  "Mauris non ligula tempus, lacinia velit a, aliquam metus. Nulla at sapien scelerisque, imperdiet ex non, venenatis mi.",
-                  style: CoinTextStyle.title3,
-                ),
-                const SizedBox(height: 35),
-                Text(
-                  "Please follow the steps below to enter the draw :",
-                  style: CoinTextStyle.orangeTitle3,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 5),
-                  height: 250,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          "1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                          style: CoinTextStyle.title4),
-                      Text(
-                          "2. Proin et orci in quam porta condimentum. Mauris non ligula tempus, lacinia velit a, aliquam metus.",
-                          style: CoinTextStyle.title4),
-                      Text(
-                          "3. Nulla atone sapien scelerisque, imperdiet exq non, venenatis mi.",
-                          style: CoinTextStyle.title4),
-                      Text(
-                          "4. Nullam arcu leo, blandit nec consequat vel, molestie et sem.",
-                          style: CoinTextStyle.title4),
-                      Text(
-                          "5. Praesent pretium erat at nulla euismod, a rutrum elit blandit. Etiam nec aliquam metus.",
-                          style: CoinTextStyle.title4),
-                      Text(
-                          "6. Aliquam erat volutpat. Morbi non condimentum sapien.",
-                          style: CoinTextStyle.title4)
-                    ],
-                  ),
-                ),
-              ],
+            child: FutureBuilder<List>(
+              future: getdata.GetTnCLuckyDraw(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView(children: [
+                    Text(
+                      "How To Use a Lucky Draw",
+                      style: CoinTextStyle.title2Bold.copyWith(
+                        color: CoinColors.orange,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      "Go To Luckydraw Page To Purchase The Entry For LuckyDraw,Winner will be announce.",
+                      style: CoinTextStyle.title3,
+                    ),
+                    const SizedBox(height: 35),
+                    Text(
+                      "Below Was the Term And Condition Along With Step To Participate Lucky Draw :",
+                      style: CoinTextStyle.orangeTitle3,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        for (int i = 0;
+                            i < snapshot.data![0]['servicecount'];
+                            i++)
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    snapshot.data![0]
+                                        ['service_' + i.toString()],
+                                    style: CoinTextStyle.title4.copyWith(
+                                      letterSpacing: 0.5,
+                                    )),
+                              ),
+                              const SizedBox(height: 6),
+                            ],
+                          )
+                      ],
+                    ),
+                  ]);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
           ),
         ),

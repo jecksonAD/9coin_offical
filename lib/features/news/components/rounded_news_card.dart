@@ -19,6 +19,7 @@ class RoundedNewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -55,27 +56,25 @@ class RoundedNewsCard extends StatelessWidget {
                     },
                   ),
                 )),
-            Expanded(
-              child: Container(
-                alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(date,
-                        style: CoinTextStyle.title4
-                            .copyWith(color: CoinColors.black54)),
-                    Text(
-                      title,
-                      style: CoinTextStyle.title3Bold.copyWith(
-                        color: CoinColors.orange,
-                      ),
+            Container(
+              alignment: Alignment.center,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(date,
+                      style: CoinTextStyle.title4
+                          .copyWith(color: CoinColors.black54)),
+                  Text(
+                    title,
+                    style: CoinTextStyle.title3Bold.copyWith(
+                      color: CoinColors.orange,
                     ),
-                    Text(desc, style: CoinTextStyle.title5),
-                  ],
-                ),
+                  ),
+                  Text(desc, style: CoinTextStyle.title5),
+                ],
               ),
             ),
           ],

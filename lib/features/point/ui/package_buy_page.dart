@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
+import 'package:ninecoin/features/api/tnc.dart';
 import 'package:ninecoin/features/point/api/pointpackage.dart';
 import 'package:ninecoin/features/point/ui/package_payment_page.dart';
 import 'package:ninecoin/typography/text_styles.dart';
@@ -29,6 +30,7 @@ class PackageBuyPage extends StatefulWidget {
 class _PackageBuyPageState extends State<PackageBuyPage> {
   late String Userid = "";
   pointpackage getdata = new pointpackage();
+  Tnc gettnc = new Tnc();
   @override
   void initState() {
     // TODO: implement initState
@@ -103,25 +105,38 @@ class _PackageBuyPageState extends State<PackageBuyPage> {
                       style: CoinTextStyle.title3Bold
                           .copyWith(color: CoinColors.dialogTextColor)),
                   const SizedBox(height: 6.0),
-                  Text(
-                      "1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                      style: CoinTextStyle.title4),
-                  const SizedBox(height: 6.0),
-                  Text(
-                      "2. Proin et orci in quam porta condimentum. Mauris non ligula tempus, lacinia velit a, aliquam metus.",
-                      style: CoinTextStyle.title4),
-                  const SizedBox(height: 6.0),
-                  Text(
-                      "3. Nulla atone sapien scelerisque, imperdiet exq non, venenatis mi.",
-                      style: CoinTextStyle.title4),
-                  const SizedBox(height: 6.0),
-                  Text(
-                      "4. Nullam arcu leo, blandit nec consequat vel, molestie et sem.",
-                      style: CoinTextStyle.title4),
-                  const SizedBox(height: 6.0),
-                  Text(
-                      "5. Praesent pretium erat at nulla euismod, a rutrum elit blandit. Etiam nec aliquam metus.",
-                      style: CoinTextStyle.title4),
+                  FutureBuilder<List>(
+                      future: gettnc.GetTncPointPackage(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: <Widget>[
+                              for (int i = 0;
+                                  i < snapshot.data![0]['servicecount'];
+                                  i++)
+                                Column(
+                                  children: [
+                                    const SizedBox(height: 6),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                          snapshot.data![0]
+                                              ['service_' + i.toString()],
+                                          style: CoinTextStyle.title3.copyWith(
+                                            letterSpacing: 0.5,
+                                          )),
+                                    ),
+                                    const SizedBox(height: 6.0),
+                                  ],
+                                )
+                            ],
+                          );
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      }),
                 ],
               ),
             ),

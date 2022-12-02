@@ -8,45 +8,49 @@ import 'package:ninecoin/features/home/ui/home_page.dart';
 import 'features/auth/ui/login_page.dart';
 import 'firebase_options.dart';
 
-Future<void> backgroundHandler(RemoteMessage message ) async{
-  
+Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
   print(message.notification!.title);
-
 }
 
-
 void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  /* await FlutterDownloader.initialize(
+      debug:
+          true, // optional: set to false to disable printing logs to console (default: true)
+      ignoreSsl:
+          true // option: set to false to disable working with http links (default: false)
+      );*/
+
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
-  alert: true,
-  announcement: false,
-  badge: true,
-  carPlay: false,
-  criticalAlert: false,
-  provisional: false,
-  sound: true,
-);
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
 
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
 
-
-FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  print('Got a message whilst in the foreground!');
-  print('Message data: ${message.data}');
-
-  if (message.notification != null) {
-    print('Message also contained a notification: ${message.notification}');
-  }
-});
-  runApp(const App(page: 0,));
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification}');
+    }
+  });
+  runApp(const App(
+    page: 0,
+  ));
 }
 
 class App extends StatelessWidget {

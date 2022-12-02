@@ -44,6 +44,9 @@ class Api {
   static const _banner = "/banner";
   static const _searchmerchant = "/SearchMerchant";
   static const _verification = "/verification";
+  static const _luckydrawtnc = "/luckydrawtnc";
+  static const _pointpackagetnc = "/pointpackagetnc";
+  static const _topuptransactionlist = "/topuptransactionlist";
 
   static String baseUrl = "$_base$_api";
   static String login = "$_base$_api$_login";
@@ -87,6 +90,9 @@ class Api {
   static String buypointpackage = "$_base$_api$_buypointpackage";
   static String banner = "$_base$_api$_banner";
   static String searchmerchant = "$_base$_api$_searchmerchant";
+  static String luckydrawtnc = "$_base$_api$_luckydrawtnc";
+  static String pointpackagetnc = "$_base$_api$_pointpackagetnc";
+  static String topuptransactionlist = "$_base$_api$_topuptransactionlist";
   static String showpurchasedproductdetail =
       "$_base$_api$_showpurchasedproductdetail";
 }

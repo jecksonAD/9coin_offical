@@ -6,7 +6,7 @@ class TransactionTile extends StatelessWidget {
   final Function()? onTap;
   final String date;
   final String packageNum;
-  final int point;
+  final String point;
   final String pointDetail;
   final bool isShowDivider;
 
@@ -38,7 +38,7 @@ class TransactionTile extends StatelessWidget {
                 color: CoinColors.dialogTextColor,
                 height: 1,
               ),
-              text: "$point",
+              text: point.toString(),
               children: [
                 const TextSpan(
                   text: " ",

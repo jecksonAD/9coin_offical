@@ -27,11 +27,11 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
   }
 
   Widget build(BuildContext context) {
-    transaction couponlist = transaction();
+    transaction getdata = transaction();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       child: FutureBuilder<List>(
-        future: couponlist.gettransactionlist(userId.toString()),
+        future: getdata.gettransactionlist(userId.toString()),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -41,13 +41,10 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                   return Column(
                     children: [
                       PurchaseTile(
-                        date: snapshot.data![index]['date']
-                            .toString()
-                            .substring(0, 10),
-                        title: "Yonqed SDN. BHD.",
-                        subtitle: "- Earphone 6pro",
-                        point: snapshot.data![index]['point'],
-                      ),
+                          date: snapshot.data![index]['date_'],
+                          title: snapshot.data![index]['name'],
+                          subtitle: "",
+                          point: snapshot.data![index]['point']),
                     ],
                   );
                 });

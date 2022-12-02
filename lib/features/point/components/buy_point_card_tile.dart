@@ -25,6 +25,7 @@ class BuyPointCardTile extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           trailing: InkWell(
+            onTap: onTap,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
               decoration: BoxDecoration(
