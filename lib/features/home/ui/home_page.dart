@@ -101,22 +101,13 @@ class _HomePageState extends State<HomePage> {
 
     // });q
 //
-    if (currentPage == 0) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => App(
-                page: 0,
-              )));
-    } else if (currentPage == 1) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => App(
-                page: 1,
-              )));
-    } else if (currentPage == 2) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => App(
-                page: 2,
-              )));
-    }
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              HomePage()), // this mainpage is your page to refresh
+      (Route<dynamic> route) => false,
+    );
   }
 
   void _onLoading() async {
@@ -159,7 +150,7 @@ class _HomePageState extends State<HomePage> {
               appBar: AppBar(
                 leadingWidth: 120,
                 leading: Padding(
-                  padding: const EdgeInsets.only(left: 16),
+                  padding: const EdgeInsets.only(left: 16, bottom: 6),
                   child: Image.asset(Assets.appLogo),
                 ),
                 actions: [
@@ -245,7 +236,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 4),
             Row(
               children: [
                 Expanded(
@@ -299,7 +290,7 @@ class HomeScreen extends StatelessWidget {
                 )),
               ],
             ),
-            const SizedBox(height: 16),
+            // const SizedBox(height: 16),
             Column(
               children: [
                 Padding(
