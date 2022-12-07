@@ -8,7 +8,6 @@ import 'package:ninecoin/features/category/ui/categories_page.dart';
 import 'package:ninecoin/features/coupon/ui/coupon_page.dart';
 import 'package:ninecoin/features/home/api/category.dart';
 import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
-import 'package:ninecoin/features/home/components/tab_item.dart';
 import 'package:ninecoin/features/notification/ui/notifications_page.dart';
 import 'package:ninecoin/main.dart';
 import 'package:ninecoin/model/news/news_model.dart';
@@ -148,9 +147,9 @@ class _HomePageState extends State<HomePage> {
                 currentTab: currentPage,
               ),
               appBar: AppBar(
-                leadingWidth: 120,
+                leadingWidth: 100,
                 leading: Padding(
-                  padding: const EdgeInsets.only(left: 16, bottom: 6),
+                  padding: const EdgeInsets.only(left: 16, top: 14, bottom: 1),
                   child: Image.asset(Assets.appLogo),
                 ),
                 actions: [
