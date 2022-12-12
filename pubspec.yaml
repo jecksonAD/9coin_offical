@@ -33,6 +33,7 @@ dependencies:
   webview_flutter: ^3.0.4
   carousel_slider: ^4.1.1 
   pull_to_refresh: ^2.0.0
+  modal_progress_hud_nsn: ^0.3.0
   font_awesome_flutter: ^10.2.1
   open_file: ^2.1.1
   change_app_package_name: ^1.1.0
