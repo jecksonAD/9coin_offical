@@ -5,6 +5,9 @@ import 'package:ninecoin/features/point/ui/purchase_history_page.dart';
 import 'package:ninecoin/features/point/ui/transaction_history_page.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 
+import 'Product_history_page.dart';
+import 'coupon_history_page.dart';
+
 class PointHistoryPage extends StatefulWidget {
   static route() {
     return MaterialPageRoute(builder: (_) => const PointHistoryPage());
@@ -22,7 +25,7 @@ class _PointHistoryPageState extends State<PointHistoryPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -47,6 +50,8 @@ class _PointHistoryPageState extends State<PointHistoryPage>
                   tabs: const [
                     Tab(text: 'Top Up Transaction'),
                     Tab(text: 'Pruchase History'),
+                    Tab(text: 'Coupon History'),
+                    Tab(text: 'Product History'),
                   ],
                   controller: _tabController,
                   indicatorSize: TabBarIndicatorSize.tab,
@@ -59,6 +64,8 @@ class _PointHistoryPageState extends State<PointHistoryPage>
                   children: const [
                     TransactionHistoryPage(),
                     PurchaseHistoryPage(),
+                    CouponHistoryPage(),
+                    ProductPurchaseHistoryPage(),
                   ],
                 ),
               ),

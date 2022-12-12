@@ -41,10 +41,12 @@ class _PurchaseHistoryPageState extends State<PurchaseHistoryPage> {
                   return Column(
                     children: [
                       PurchaseTile(
+                          type: "transaction",
+                          id: snapshot.data![index]['id'].toString(),
                           date: snapshot.data![index]['date_'],
                           title: snapshot.data![index]['name'],
                           subtitle: "",
-                          point: snapshot.data![index]['point']),
+                          point: snapshot.data![index]['point'].toString()),
                     ],
                   );
                 });

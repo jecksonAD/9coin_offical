@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/typography/text_styles.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../services/purchase_history.dart';
 import 'package:dio/dio.dart';
@@ -11,14 +12,18 @@ import 'package:path_provider/path_provider.dart';
 
 class PurchaseTile extends StatefulWidget {
   final Function()? onTap;
+  final String id;
   final String date;
   final String title;
   final String subtitle;
-  final int point;
+  final String type;
+  final String point;
   final bool isShowDivider;
   const PurchaseTile({
     Key? key,
     this.onTap,
+    required this.id,
+    required this.type,
     required this.date,
     required this.title,
     required this.subtitle,
@@ -47,14 +52,48 @@ class _PurchaseTileState extends State<PurchaseTile> {
             children: [
               Text("${widget.point} point", style: CoinTextStyle.orangeTitle3),
               const SizedBox(width: 10),
-              /*  GestureDetector(
+              GestureDetector(
                   onTap: () async {
-                    String uri =
+                    print('test');
+                    String url = '';
+                    if (widget.type == "coupon") {
+                      url =
+                          'https://9coin.s3.ap-southeast-1.amazonaws.com/Coupon/' +
+                              widget.id +
+                              '.pdf';
+                    }
+                    if (widget.type == "transaction") {
+                      url =
+                          'https://9coin.s3.ap-southeast-1.amazonaws.com/Invoices/' +
+                              widget.id +
+                              '.pdf';
+                    }
+                    if (widget.type == "product") {
+                      url =
+                          'https://9coin.s3.ap-southeast-1.amazonaws.com/Product/' +
+                              widget.id +
+                              '.pdf';
+                    }
+                    if (widget.type == "topup") {
+                      url =
+                          'https://9coin.s3.ap-southeast-1.amazonaws.com/TopUp/' +
+                              widget.id +
+                              '.pdf';
+                    }
+
+                    if (!await launchUrl(
+                      Uri.parse(url),
+                      mode: LaunchMode.externalApplication,
+                    )) {}
+                    throw 'Could not launch $url';
+                  },
+
+                  /*  String uri =
                         "https://9coin.s3.ap-southeast-1.amazonaws.com/Invoices/222321.pdf";
 
                     await downloadFile(uri, "test.pdf");
-                  },
-                  child: Image.asset(Assets.download, height: 15, width: 15)),*/
+                  },*/
+                  child: Image.asset(Assets.download, height: 15, width: 15)),
             ],
           ),
         ),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/features/point/api/transaction.dart';
-import 'package:ninecoin/features/point/components/transaction_tile.dart';
-import 'package:ninecoin/features/point/ui/transaction_details_page.dart';
-import '../../../config/helper/common/get_user_info.dart' as getid;
-import '../components/purchase_tile.dart';
+import 'package:ninecoin/features/point/components/purchase_tile.dart';
 
-class TransactionHistoryPage extends StatefulWidget {
-  const TransactionHistoryPage({Key? key}) : super(key: key);
+import '../../../config/helper/common/get_user_info.dart' as getid;
+
+class CouponHistoryPage extends StatefulWidget {
+  const CouponHistoryPage({Key? key}) : super(key: key);
 
   @override
-  State<TransactionHistoryPage> createState() => _TransactionHistoryPageState();
+  State<CouponHistoryPage> createState() => _CouponPurchaseHistoryPageState();
 }
 
-class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
+class _CouponPurchaseHistoryPageState extends State<CouponHistoryPage> {
   @override
   int? userId;
 
@@ -30,9 +29,9 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
   Widget build(BuildContext context) {
     transaction getdata = transaction();
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
       child: FutureBuilder<List>(
-        future: getdata.gettopuptransactionlist(userId.toString()),
+        future: getdata.getCoupontransactionlist(userId.toString()),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -42,12 +41,12 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                   return Column(
                     children: [
                       PurchaseTile(
-                          type: "topup",
+                          type: "coupon",
                           id: snapshot.data![index]['id'].toString(),
                           date: snapshot.data![index]['date_'],
-                          title: snapshot.data![index]['packagename'],
+                          title: snapshot.data![index]['name'],
                           subtitle: "",
-                          point: snapshot.data![index]['point']),
+                          point: snapshot.data![index]['point'].toString()),
                     ],
                   );
                 });

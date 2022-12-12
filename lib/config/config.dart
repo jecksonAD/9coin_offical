@@ -47,6 +47,9 @@ class Api {
   static const _luckydrawtnc = "/luckydrawtnc";
   static const _pointpackagetnc = "/pointpackagetnc";
   static const _topuptransactionlist = "/topuptransactionlist";
+  static const _GetCouponTransaction = "/coupontransactionlist";
+  static const _GetCashBackTransaction = "/cashbacktransactionlist";
+  static const _GetProductTransaction = "/producttransactionlist";
 
   static String baseUrl = "$_base$_api";
   static String login = "$_base$_api$_login";
@@ -67,6 +70,10 @@ class Api {
   static String bucketurl = "$_bucketbase$_MerchantproductImage";
   static String getmerchant = "$_base$_api$_GetMerchant";
   static String gettransaction = "$_base$_api$_GetTransaction";
+  static String getcoupontranction = "$_base$_api$_GetCouponTransaction";
+  static String getproductredeemtranction =
+      "$_base$_api$_GetProductTransaction";
+  static String getcashbacktransaction = "$_base$_api$_GetCashBackTransaction";
   static String redeemproductlist = "$_base$_api$_GetProductList";
   static String redeemproductdetail = "$_base$_api$_GetProductDetail";
   static String newslist = "$_base$_api$_Newslist";
