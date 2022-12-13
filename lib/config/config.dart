@@ -50,6 +50,7 @@ class Api {
   static const _GetCouponTransaction = "/coupontransactionlist";
   static const _GetCashBackTransaction = "/cashbacktransactionlist";
   static const _GetProductTransaction = "/producttransactionlist";
+  static const _editUser = "/edit";
 
   static String baseUrl = "$_base$_api";
   static String login = "$_base$_api$_login";
@@ -100,6 +101,7 @@ class Api {
   static String luckydrawtnc = "$_base$_api$_luckydrawtnc";
   static String pointpackagetnc = "$_base$_api$_pointpackagetnc";
   static String topuptransactionlist = "$_base$_api$_topuptransactionlist";
+  static String edituser = "$_base$_api$_editUser";
   static String showpurchasedproductdetail =
       "$_base$_api$_showpurchasedproductdetail";
 }

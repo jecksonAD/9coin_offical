@@ -24,6 +24,7 @@ class _CouponPageState extends State<CouponPage>
   late final TabController _tabController;
   late String Userid;
   late String purchasecondition = "";
+
   Coupon getdata = new Coupon();
   @override
   void initState() {
@@ -84,15 +85,16 @@ class ActiveDiscountCopoun extends StatelessWidget {
 
   ActiveDiscountCopoun({Key? key}) : super(key: key);
   Coupon couponlist = Coupon();
+
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     return FutureBuilder<List>(
         future: couponlist.getCouponList(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              physics: const   BouncingScrollPhysics(),
-
+                physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {
@@ -166,7 +168,7 @@ class _PurchasedDiscountCopounState extends State<PurchasedDiscountCopoun> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              physics: FixedExtentScrollPhysics(),
+                physics: FixedExtentScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {

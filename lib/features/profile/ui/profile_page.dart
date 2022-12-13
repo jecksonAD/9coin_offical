@@ -90,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     imageUrl: Assets.profileIcon,
                     title: "Profile Details",
                     onTap: () {
-                      Navigator.push(context, ProfileDetailsPage.route(data));
+                      Navigator.push(context, ProfileDetailsPage.route());
                     },
                   ),
                   ProfileTile(

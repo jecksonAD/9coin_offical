@@ -30,6 +30,7 @@ import '../components/circle_icon.dart';
 import '../components/rounded_feature_card.dart';
 import '../components/rounded_news_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   final Widget? body;
@@ -93,20 +94,35 @@ class _HomePageState extends State<HomePage> {
   void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
-    // setState(() {
-    //       // HomeScreen();
 
-    // });q
-//
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              HomePage()), // this mainpage is your page to refresh
-      (Route<dynamic> route) => false,
-    );
+    _refreshController.refreshCompleted();
+
+    if (currentPage == 0) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const App(
+                page: 0,
+              )));
+    } else if (currentPage == 1) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const App(
+                page: 1,
+              )));
+    } else if (currentPage == 2) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const App(
+                page: 2,
+              )));
+    } else if (currentPage == 3) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const App(
+                page: 3,
+              )));
+    } else if (currentPage == 4) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const App(
+                page: 4,
+              )));
+    }
   }
 
   void _onLoading() async {

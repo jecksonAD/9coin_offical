@@ -9,8 +9,12 @@ import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'package:ninecoin/colors/colors.dart';
+import 'package:ninecoin/features/auth/services/auth.dart';
+import 'package:ninecoin/features/auth/ui/signup_page.dart';
 import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
 import 'package:ninecoin/features/home/ui/home_view.dart';
+import 'package:ninecoin/features/profile/services/profile_service.dart';
+import 'package:ninecoin/model/auth/register/user_edit.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/update_details_dialog.dart';
 import 'package:ninecoin/utilities/dialogs/updated_successful_dialog.dart';
@@ -18,10 +22,12 @@ import 'package:ninecoin/widgets/drop_down_button_with_title.dart';
 import 'package:ninecoin/widgets/text_field_with_title.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../utilities/dialogs/error_dialoge.dart';
 import '../components/profile_circular_picture.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../services/upload_image.dart';
+import 'profile_details_page.dart';
 
 @immutable
 class EditProfilePage extends StatefulWidget {
@@ -36,13 +42,22 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  late TextEditingController username = TextEditingController();
+  late TextEditingController contactnumber = TextEditingController();
+  late TextEditingController address = TextEditingController();
+
+  late String genderglobal;
   File? _image;
   final picker = ImagePicker();
+  late String userid;
   bool showSpinner = false;
 
   final ValueNotifier<int> _notifier = ValueNotifier(0);
-
-  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,80 +72,113 @@ class _EditProfilePageState extends State<EditProfilePage> {
               title: const Text("Edit Profile"),
             ),
             body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    height: 90,
-                    width: 90,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: CoinColors.black12,
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    alignment: Alignment.center,
-                    child: _image != null
-                        ? Image.file(
-                            _image!.absolute,
-                            fit: BoxFit.contain,
-                          )
-                        : ProfileCircularPicture(
-                            isShowSelectImage: true,
-                            onTap: () => imagePickerFromBottom(context),
+              child: FutureBuilder(
+                future: localUser(),
+                builder: (_, AsyncSnapshot<Map?> snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          height: 90,
+                          width: 90,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: CoinColors.black12,
                           ),
-                  ),
-                  const TextFieldWithTitle(
-                    title: "Name",
-                    hintText: "Tan Qing Fong",
-                  ),
-                  const TextFieldWithTitle(
-                    title: "Contact Number",
-                    hintText: "010 599 6883",
-                  ),
-                  const _InputGender(),
-                  const TextFieldWithTitle(
-                    title: "Address",
-                    hintText: "No. 560, Taman University 6",
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: Row(
-                      children: [
-                        _InputCity(),
-                        const SizedBox(width: 10),
-                        _InputState(),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          alignment: Alignment.center,
+                          child: _image != null
+                              ? Image.file(
+                                  _image!.absolute,
+                                  fit: BoxFit.contain,
+                                )
+                              : ProfileCircularPicture(
+                                  isShowSelectImage: true,
+                                  onTap: () => imagePickerFromBottom(context),
+                                ),
+                        ),
+                        TextFieldWithTitle(
+                          title: "Name",
+                          hintText: "",
+                          value: snapshot.data!['name'],
+                          inputbar: username,
+                        ),
+                        TextFieldWithTitle(
+                          title: "Contact Number",
+                          hintText: "",
+                          value: snapshot.data!['phonenumber'],
+                          inputbar: contactnumber,
+                        ),
+                        _InputGender(
+                          gender: snapshot.data!['gender'],
+                        ),
+                        TextFieldWithTitle(
+                          title: "Address",
+                          hintText: "",
+                          value: snapshot.data!['address'],
+                          inputbar: address,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 10),
+                              _InputCountry(),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                setState(() {
+                                  // showSpinner = true;
+                                });
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                UserEdit user = UserEdit(
+                                    name: username.text,
+                                    phonenumber: contactnumber.text,
+                                    address: address.text,
+                                    gender: prefs.getString('gender'));
+
+                                //Return String
+                                userid = snapshot.data!['id'].toString();
+
+                                //print(userid.toString());
+
+                                if (await showUpdateDetailsDialog(context)) {
+                                  edituser(registerUser: user, userid: userid)
+                                      .then((value) async {
+                                    await showUpdatedSuccessfulDialog(
+                                            context, value)
+                                        .then((value) {
+                                      Navigator.push(
+                                          context, ProfileDetailsPage.route());
+                                    });
+                                  }).catchError((err) async {
+                                    await showErrorDialog(
+                                        context, "Error", "$err");
+                                  });
+
+                                  //await showUpdatedSuccessfulDialog(context);
+                                }
+
+                                /*   uploadImage(_image!).then((value) {
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                });*/
+                              },
+                              child: const Text("Update")),
+                        )
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: Row(
-                      children: [
-                        _InputPostCode(),
-                        const SizedBox(width: 10),
-                        _InputCountry(),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          setState(() {
-                            showSpinner = true;
-                          });
-                          uploadImage(_image!).then((value) {
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          });
-                          if (await showUpdateDetailsDialog(context)) {
-                            await showUpdatedSuccessfulDialog(context);
-                          }
-                        },
-                        child: const Text("Update")),
-                  )
-                ],
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
             ),
           ),
@@ -179,6 +227,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  String gender() {
+    return 'test';
+  }
+
   Future pickImageFromGallery() async {
     XFile? pickedFile =
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
@@ -201,7 +253,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   //     log("Error: $e");
   //   }
   // }
-
 }
 
 class _InputCountry extends StatefulWidget {
@@ -214,9 +265,9 @@ class _InputCountry extends StatefulWidget {
 }
 
 class _InputCountryState extends State<_InputCountry> {
-  List<String> countries = ["America", "Dubai", "Malasia"];
+  List<String> countries = ["Malaysia"];
 
-  String? selectCountry = "America";
+  String? selectCountry = "Malaysia";
 
   @override
   Widget build(BuildContext context) {
@@ -480,8 +531,10 @@ class _InputCityState extends State<_InputCity> {
 }
 
 class _InputGender extends StatefulWidget {
+  final String gender;
   const _InputGender({
     Key? key,
+    required this.gender,
   }) : super(key: key);
 
   @override
@@ -490,9 +543,26 @@ class _InputGender extends StatefulWidget {
 
 class _InputGenderState extends State<_InputGender> {
   final List<String> genders = ["Male", "Female"];
-  String? selectGender = "Male";
+
+  String? selectGender;
+  String? gender;
+  @override
+  void initState() {
+    // TODO: implement initState
+    selectGender = widget.gender;
+    getgender(selectGender!);
+    super.initState();
+  }
+
+  void getgender(String getgender) async {
+    SharedPreferences gender = await SharedPreferences.getInstance();
+    gender.setString('gender', getgender);
+  }
+
   @override
   Widget build(BuildContext context) {
+    //selectGender = widget.gender;
+    //gender = widget.gender;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 4, 16, 0),
       child: Row(
@@ -508,7 +578,10 @@ class _InputGenderState extends State<_InputGender> {
                     activeColor: CoinColors.orange,
                     value: "Male",
                     groupValue: selectGender,
-                    onChanged: (String? state) {
+                    onChanged: (String? state) async {
+                      SharedPreferences gender =
+                          await SharedPreferences.getInstance();
+                      gender.setString('gender', state!);
                       setState(() {
                         selectGender = state;
                       });
@@ -527,7 +600,10 @@ class _InputGenderState extends State<_InputGender> {
                     focusColor: CoinColors.orange,
                     value: "Female",
                     groupValue: selectGender,
-                    onChanged: (String? state) {
+                    onChanged: (String? state) async {
+                      SharedPreferences gender =
+                          await SharedPreferences.getInstance();
+                      gender.setString('gender', state!);
                       setState(() {
                         selectGender = state;
                       });

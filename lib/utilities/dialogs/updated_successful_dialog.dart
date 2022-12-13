@@ -3,13 +3,12 @@ import 'package:ninecoin/assets/assets.dart';
 
 import 'generic_dialog.dart';
 
-Future<bool> showUpdatedSuccessfulDialog(BuildContext context) {
+Future<bool> showUpdatedSuccessfulDialog(BuildContext context, String text) {
   return showGenericDialog<bool>(
     context: context,
     imageUrl: Assets.updated,
     title: "Update Successful!",
-    content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+    content: text,
     optionsBuilder: () => {
       "Back": false,
     },

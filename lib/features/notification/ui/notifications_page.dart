@@ -47,9 +47,9 @@ class NotificationPage extends StatelessWidget {
                       ),
                     ),
                     color: CoinColors.orange),
-                title: notification.data[index].notifiableType,
+                title: notification.data[index].type,
                 subtitle: notification.data[index].data,
-                date: "28/4/2022",
+                date: notification.data[index].createdAt,
               );
             }),
       ),

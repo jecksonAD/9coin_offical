@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 
+import '../../../main.dart';
+
 class NotificationTile extends StatelessWidget {
   final Widget icon;
   final String title;
@@ -17,17 +19,25 @@ class NotificationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: icon,
-          title: Text(title, style: CoinTextStyle.title3Bold),
-          subtitle: Text(subtitle, style: CoinTextStyle.title4),
-          trailing: Text(date),
-        ),
-        const SizedBox(height: 8),
-        const Divider(),
-      ],
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const App(
+                  page: 0,
+                )));
+      },
+      child: Column(
+        children: [
+          ListTile(
+            leading: icon,
+            title: Text(title, style: CoinTextStyle.title3Bold),
+            subtitle: Text(subtitle, style: CoinTextStyle.title4),
+            trailing: Text(date),
+          ),
+          const SizedBox(height: 8),
+          const Divider(),
+        ],
+      ),
     );
   }
 }

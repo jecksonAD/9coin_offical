@@ -4,6 +4,7 @@ import 'package:ninecoin/model/auth/login/login_response.dart';
 import '../../../config/config.dart';
 import '../../../config/helper/auth_helper/auth_helper.dart';
 import '../../../model/auth/register/register_response.dart';
+import '../../../model/auth/register/user_edit.dart';
 import '../../../model/auth/register/user_register.dart';
 
 Future<RegisterResponse> registerUser(
@@ -25,6 +26,32 @@ Future<RegisterResponse> registerUser(
     //print(user);
     return user;
   } else {
+    throw json.decode(response.body)["error"];
+  }
+}
+
+Future<String> edituser(
+    {required UserEdit registerUser, required String userid}) async {
+  String url = Api.edituser + '/' + userid;
+  var uri = Uri.parse(url);
+  print(url);
+  var response = await http.post(
+    uri,
+    headers: {"Content-Type": "application/json"},
+    body: json.encode(registerUser.toMap()),
+  );
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    // setUser(user);
+
+    //print(user);
+    LoginResponse user = LoginResponse.fromJson(json.decode(response.body));
+
+    setLoginUserInfo(user);
+    print(response.body);
+    return 'Sucess';
+  } else {
+    print(response.body);
     throw json.decode(response.body)["error"];
   }
 }
@@ -59,7 +86,7 @@ Future<String> Verification(
     {required String email, required String verificationcode}) async {
   String url = Api.verification;
   var uri = Uri.parse(url);
-  print('testing' + email + verificationcode);
+
   var response = await http.post(uri,
       headers: {"Content-Type": "application/json"},
       body: json.encode({

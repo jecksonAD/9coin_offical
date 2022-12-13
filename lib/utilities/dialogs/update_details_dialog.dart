@@ -8,8 +8,7 @@ Future<bool> showUpdateDetailsDialog(BuildContext context) {
     context: context,
     imageUrl: Assets.updatedDetails,
     title: "Update your Details?",
-    content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit proin et orci in quam.",
+    content: "Your Profile Will Be Update.",
     optionsBuilder: () => {
       "Cancel": false,
       "Confirm": true,
