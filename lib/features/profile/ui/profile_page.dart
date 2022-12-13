@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: CoinColors.black12,
                     child: Row(
                       children: [
-                        ProfileCircularPicture(imageUrl: imageUrl),
+                        //    ProfileCircularPicture(imageUrl: imageUrl),
                         Padding(
                           padding: const EdgeInsets.only(left: 24),
                           child: Column(
