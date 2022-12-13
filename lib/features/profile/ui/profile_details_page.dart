@@ -69,6 +69,22 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     });
   }
 
+  Future<String> getUseravatar() async {
+    var http;
+    var responce = await http.get(Uri.parse(
+        'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
+    // setState(() {
+    //   profileImageModel = profileImageModel.fromJson(responce[])
+    // });
+
+    if (responce.statusCode == 200) {
+      print(json.decode(responce.body));
+      return json.decode(responce.body);
+    } else {
+      throw responce.body;
+    }
+  }
+
   Future<ImageGet> getUserImage() async {
     var http;
     var responce = await http.get(Uri.parse(
@@ -122,7 +138,7 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                     child: Column(
                       children: [
                         ProfileCircularPicture(
-                          imageUrl: datas!['profile_photo_url'].toString(),
+                          imageUrl: datas!['avatarphotourl'].toString(),
                         ),
                         const SizedBox(height: 10),
                         Text("${datas!['phonenumber']}",

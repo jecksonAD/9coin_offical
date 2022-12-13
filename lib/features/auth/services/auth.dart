@@ -49,7 +49,7 @@ Future<String> edituser(
 
     setLoginUserInfo(user);
     print(response.body);
-    return 'Sucess';
+    return 'Success';
   } else {
     print(response.body);
     throw json.decode(response.body)["error"];

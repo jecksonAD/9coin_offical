@@ -114,7 +114,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   fit: BoxFit.contain,
                                 )
                               : ProfileCircularPicture(
-                                  isShowSelectImage: true,
+                                  imageUrl: 'null',
                                   onTap: () => imagePickerFromBottom(context),
                                 ),
                         ),
@@ -152,10 +152,71 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                           child: ElevatedButton(
                               onPressed: () async {
-                                setState(() {
-                                  // showSpinner = true;
-                                });
-                                SharedPreferences prefs =
+                                if (_image != null) {
+                                  // print(_image);
+                                  uploadImage(_image!).then((value) {
+                                    setState(() async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      UserEdit user = UserEdit(
+                                          name: username.text,
+                                          phonenumber: contactnumber.text,
+                                          address: address.text,
+                                          gender: prefs.getString('gender'));
+
+                                      userid = snapshot.data!['id'].toString();
+
+                                      if (await showUpdateDetailsDialog(
+                                          context)) {
+                                        edituser(
+                                                registerUser: user,
+                                                userid: userid)
+                                            .then((value) async {
+                                          await showUpdatedSuccessfulDialog(
+                                                  context, value)
+                                              .then((value) {
+                                            Navigator.push(context,
+                                                ProfileDetailsPage.route());
+                                          });
+                                        }).catchError((err) async {
+                                          await showErrorDialog(
+                                              context, "Error", "$err");
+                                        });
+
+                                        //await showUpdatedSuccessfulDialog(context);
+                                      }
+                                    });
+                                  });
+                                } else {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  UserEdit user = UserEdit(
+                                      name: username.text,
+                                      phonenumber: contactnumber.text,
+                                      address: address.text,
+                                      gender: prefs.getString('gender'));
+
+                                  userid = snapshot.data!['id'].toString();
+
+                                  if (await showUpdateDetailsDialog(context)) {
+                                    edituser(registerUser: user, userid: userid)
+                                        .then((value) async {
+                                      await showUpdatedSuccessfulDialog(
+                                              context, value)
+                                          .then((value) {
+                                        Navigator.push(context,
+                                            ProfileDetailsPage.route());
+                                      });
+                                    }).catchError((err) async {
+                                      await showErrorDialog(
+                                          context, "Error", "$err");
+                                    });
+
+                                    //await showUpdatedSuccessfulDialog(context);
+                                  }
+                                }
+
+                                /*  SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 UserEdit user = UserEdit(
                                     name: username.text,
@@ -167,8 +228,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 userid = snapshot.data!['id'].toString();
 
                                 //print(userid.toString());
-
-                                if (await showUpdateDetailsDialog(context)) {
+*/
+                                /*   if (await showUpdateDetailsDialog(context)) {
                                   edituser(registerUser: user, userid: userid)
                                       .then((value) async {
                                     await showUpdatedSuccessfulDialog(
@@ -183,9 +244,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   });
 
                                   //await showUpdatedSuccessfulDialog(context);
-                                }
+                                }*/
 
-                                /*   uploadImage(_image!).then((value) {
+                                /*  uploadImage(_image!).then((value) {
                                   setState(() {
                                     showSpinner = false;
                                   });
