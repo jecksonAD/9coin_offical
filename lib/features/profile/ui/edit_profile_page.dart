@@ -9,7 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
-import 'package:network_handler/network_handler.dart';
 
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/auth/services/auth.dart';

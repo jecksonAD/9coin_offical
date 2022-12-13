@@ -18,45 +18,20 @@ import '../../../config/helper/common/get_user_info.dart' as getid;
 import '../../auth/services/auth.dart';
 
 class ProfileDetailsPage extends StatefulWidget {
-  static Route route() {
+  static Route<ProfileDetailsPage> route() {
     return MaterialPageRoute(builder: (context) => ProfileDetailsPage());
   }
-
-  ProfileDetailsPage({
-    Key? key,
-  }) : super(key: key);
 
   @override
   State<ProfileDetailsPage> createState() => _ProfileDetailsPageState();
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
+  Map<dynamic, dynamic>? datas;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   var _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool loading = true;
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-
-    _refreshController.refreshCompleted();
-    setState(() {
-      initState();
-    });
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-
-class ProfileDetailsPage extends StatefulWidget {
-  static Route<ProfileDetailsPage> route(Map<dynamic, dynamic>? data) {
-    return MaterialPageRoute(
-        builder: (context) => ProfileDetailsPage(data: data));
-  }
-
-  Map<dynamic, dynamic>? datas;
+  late bool loading = true;
   void initState() {
     // TODO: implement initState
 
@@ -73,30 +48,42 @@ class ProfileDetailsPage extends StatefulWidget {
     super.initState();
   }
 
-  @override
-  State<ProfileDetailsPage> createState() => _ProfileDetailsPageState();
-}
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
 
-class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
-  
+    _refreshController.refreshCompleted();
+    setState(() {
+      initState();
+    });
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    if (mounted) setState(() {});
+    _refreshController.loadComplete();
+    setState(() {
+      initState();
+    });
+  }
+
   Future<ImageGet> getUserImage() async {
-     var http;
-     var responce = await http.get(Uri.parse(
+    var http;
+    var responce = await http.get(Uri.parse(
         'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
-        // setState(() {
-        //   profileImageModel = profileImageModel.fromJson(responce[])
-        // });
+    // setState(() {
+    //   profileImageModel = profileImageModel.fromJson(responce[])
+    // });
 
     if (responce.statusCode == 200) {
-
-
-        return ImageGet.fromJson(json.decode(responce.body));
+      return ImageGet.fromJson(json.decode(responce.body));
+    } else {
+      throw responce.body;
     }
-    else{
-       throw responce.body;
-    }
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,33 +122,33 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                     child: Column(
                       children: [
                         ProfileCircularPicture(
-                          imageUrl: widget.datas!['profile_photo_url'].toString(),
+                          imageUrl: datas!['profile_photo_url'].toString(),
                         ),
                         const SizedBox(height: 10),
-                        Text("${widget.datas!['phonenumber']}",
+                        Text("${datas!['phonenumber']}",
                             style: CoinTextStyle.title4
                                 .copyWith(color: CoinColors.orange)),
-                        Text("${widget.datas!['name']}",
+                        Text("${datas!['name']}",
                             style: CoinTextStyle.title1Bold
                                 .copyWith(fontSize: 22)),
-                        Text("${widget.datas!['email']}"),
+                        Text("${datas!['email']}"),
                       ],
                     ),
                   ),
                   EditProfileTile(
                     imageUrl: Assets.gender,
                     title1: "Gender",
-                    title2: "${widget.datas!['gender']}",
+                    title2: "${datas!['gender']}",
                   ),
                   EditProfileTile(
                     imageUrl: Assets.phone,
                     title1: "Contact Number",
-                    title2: "${widget.datas!['phonenumber']}",
+                    title2: "${datas!['phonenumber']}",
                   ),
                   EditProfileTile(
                     imageUrl: Assets.email,
                     title1: "Address",
-                    title2: "${widget.datas!['address']}",
+                    title2: "${datas!['address']}",
                     isShowDivider: false,
                   ),
                 ],
@@ -169,5 +156,4 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
       ),
     );
   }
-};
-  }}
+}

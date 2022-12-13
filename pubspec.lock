@@ -446,18 +446,11 @@ packages:
     source: hosted
     version: "0.6.5"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: "3520fa844009431b5d4491a5a778603520cdc399ab3406332dcc50f93547258c"
       url: "https://pub.dev"
-    source: hosted
-    version: "4.7.0"
-  json_annotation:
-    dependency: "direct main"
-    description:
-      name: json_annotation
-      url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
   lints:
@@ -504,7 +497,8 @@ packages:
     dependency: "direct main"
     description:
       name: network_handler
-      url: "https://pub.dartlang.org"
+      sha256: "29911821413b5bad23d2754589b098ecabbb3cc5311dd33bd0d293a5e79ea4ec"
+      url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
   octo_image:
