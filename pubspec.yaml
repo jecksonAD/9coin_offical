@@ -41,6 +41,8 @@ dependencies:
   barcode: ^2.1.0
   syncfusion_flutter_barcodes: ^20.3.60
 
+  network_handler: ^1.0.1
+  json_annotation: ^4.7.0
 
 
 

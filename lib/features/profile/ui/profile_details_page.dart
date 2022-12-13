@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
@@ -7,6 +9,8 @@ import 'package:ninecoin/features/profile/components/edit_profile_tile.dart';
 import 'package:ninecoin/features/profile/components/profile_circular_picture.dart';
 import 'package:ninecoin/features/profile/components/profile_tile.dart';
 import 'package:ninecoin/features/profile/services/profile_service.dart';
+import 'package:ninecoin/features/profile/services/get_image.dart';
+import 'package:ninecoin/features/profile/services/profile_imagemodel.dart';
 import 'package:ninecoin/features/profile/ui/edit_profile_page.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -46,10 +50,10 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     await Future.delayed(Duration(milliseconds: 1000));
     // if failed,use loadFailed(),if no data return,use LoadNodata()
 
-    _refreshController.loadComplete();
-    setState(() {
-      initState();
-    });
+class ProfileDetailsPage extends StatefulWidget {
+  static Route<ProfileDetailsPage> route(Map<dynamic, dynamic>? data) {
+    return MaterialPageRoute(
+        builder: (context) => ProfileDetailsPage(data: data));
   }
 
   Map<dynamic, dynamic>? datas;
@@ -69,6 +73,30 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
     super.initState();
   }
 
+  @override
+  State<ProfileDetailsPage> createState() => _ProfileDetailsPageState();
+}
+
+class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
+  
+  Future<ImageGet> getUserImage() async {
+     var http;
+     var responce = await http.get(Uri.parse(
+        'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
+        // setState(() {
+        //   profileImageModel = profileImageModel.fromJson(responce[])
+        // });
+
+    if (responce.statusCode == 200) {
+
+
+        return ImageGet.fromJson(json.decode(responce.body));
+    }
+    else{
+       throw responce.body;
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,33 +135,33 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
                     child: Column(
                       children: [
                         ProfileCircularPicture(
-                          imageUrl: datas!['profile_photo_url'].toString(),
+                          imageUrl: widget.datas!['profile_photo_url'].toString(),
                         ),
                         const SizedBox(height: 10),
-                        Text("${datas!['phonenumber']}",
+                        Text("${widget.datas!['phonenumber']}",
                             style: CoinTextStyle.title4
                                 .copyWith(color: CoinColors.orange)),
-                        Text("${datas!['name']}",
+                        Text("${widget.datas!['name']}",
                             style: CoinTextStyle.title1Bold
                                 .copyWith(fontSize: 22)),
-                        Text("${datas!['email']}"),
+                        Text("${widget.datas!['email']}"),
                       ],
                     ),
                   ),
                   EditProfileTile(
                     imageUrl: Assets.gender,
                     title1: "Gender",
-                    title2: "${datas!['gender']}",
+                    title2: "${widget.datas!['gender']}",
                   ),
                   EditProfileTile(
                     imageUrl: Assets.phone,
                     title1: "Contact Number",
-                    title2: "${datas!['phonenumber']}",
+                    title2: "${widget.datas!['phonenumber']}",
                   ),
                   EditProfileTile(
                     imageUrl: Assets.email,
                     title1: "Address",
-                    title2: "${datas!['address']}",
+                    title2: "${widget.datas!['address']}",
                     isShowDivider: false,
                   ),
                 ],
@@ -141,4 +169,5 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
       ),
     );
   }
-}
+};
+  }}

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter/material.dart';
+import 'package:network_handler/network_handler.dart';
 
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/auth/services/auth.dart';
@@ -15,6 +18,7 @@ import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart'
 import 'package:ninecoin/features/home/ui/home_view.dart';
 import 'package:ninecoin/features/profile/services/profile_service.dart';
 import 'package:ninecoin/model/auth/register/user_edit.dart';
+import 'package:ninecoin/features/profile/services/profile_imagemodel.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/update_details_dialog.dart';
 import 'package:ninecoin/utilities/dialogs/updated_successful_dialog.dart';
@@ -51,12 +55,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final picker = ImagePicker();
   late String userid;
   bool showSpinner = false;
-
+  // NetworkHandler networkHandler = NetworkHandler()
   final ValueNotifier<int> _notifier = ValueNotifier(0);
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+  }
+
+  ImageGet profileImageModel = ImageGet();
+
+  Future<ImageGet> getUserImage() async {
+    var responce = await http.get(Uri.parse(
+        'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
+    // setState(() {
+    //   profileImageModel = profileImageModel.fromJson(responce[])
+    // });
+
+    if (responce.statusCode == 200) {
+      return ImageGet.fromJson(json.decode(responce.body));
+    } else {
+      throw responce.body;
+    }
   }
 
   @override

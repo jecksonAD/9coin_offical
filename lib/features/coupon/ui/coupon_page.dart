@@ -89,6 +89,15 @@ class ActiveDiscountCopoun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
+    late double font1;
+    late double font2;
+    late double font3;
+    late double font4;
+    Size size = MediaQuery.of(context).size;
+    font1 = size.width * 1.0;
+    font2 = size.height * 0.1;
+    font3 = size.height * 0.2;
+    font4 = size.height * 0.3;
     return FutureBuilder<List>(
         future: couponlist.getCouponList(),
         builder: (context, snapshot) {

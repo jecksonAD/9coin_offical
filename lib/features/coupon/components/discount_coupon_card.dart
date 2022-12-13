@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/assets/assets.dart';
 
-class DiscountCouponCard extends StatelessWidget {
+class DiscountCouponCard extends StatefulWidget {
   final String imageUrl;
   final String maxredeemper;
   final String title;
@@ -19,13 +19,30 @@ class DiscountCouponCard extends StatelessWidget {
       required this.period,
       this.onTap})
       : super(key: key);
+
+  @override
+  State<DiscountCouponCard> createState() => _DiscountCouponCardState();
+}
+
+class _DiscountCouponCardState extends State<DiscountCouponCard> {
+  late double font1;
+  late double font2;
+  late double font3;
+  late double font4;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final double rate =
-        100 - double.parse(promopoint) / double.parse(originalpoint) * 100;
+    final double rate = 100 -
+        double.parse(widget.promopoint) /
+            double.parse(widget.originalpoint) *
+            100;
+    font1 = size.width * 0.042;
+    font2 = size.width * 0.021;
+    font3 = size.width * 0.023;
+    font4 = size.width * 0.036;
     return InkWell(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Stack(children: [
         Row(
           children: [
@@ -35,7 +52,7 @@ class DiscountCouponCard extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.grey,
                   image: DecorationImage(
-                      image: NetworkImage(imageUrl), fit: BoxFit.cover),
+                      image: NetworkImage(widget.imageUrl), fit: BoxFit.cover),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
@@ -57,14 +74,14 @@ class DiscountCouponCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        widget.title,
                         style: TextStyle(
-                            fontSize: 16,
+                            fontSize: font1,
                             color: Color(0xff70bea4),
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                        height: size.height * 0.01,
+                        height: 3,
                       ),
                       Row(
                         children: [
@@ -76,7 +93,7 @@ class DiscountCouponCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            promopoint,
+                            widget.promopoint,
                             style: const TextStyle(
                               fontSize: 18,
                               color: Color(0xff70bea4),
@@ -85,7 +102,7 @@ class DiscountCouponCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        'Point: ' + originalpoint,
+                        'Point: ' + widget.originalpoint,
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           decorationColor: Colors.red,
@@ -96,12 +113,12 @@ class DiscountCouponCard extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 6),
+                          Padding(
+                            padding: EdgeInsets.only(top: 4),
                             child: Text(
                               'SAVE',
                               style: TextStyle(
-                                  fontSize: 8,
+                                  fontSize: font3,
                                   color: Color(0xff70bea4),
                                   fontWeight: FontWeight.bold),
                             ),
@@ -110,11 +127,11 @@ class DiscountCouponCard extends StatelessWidget {
                             width: size.width * 0.01,
                           ),
                           Text(
-                            rate.toStringAsFixed(0) + "%",
+                            '20%',
                             style: TextStyle(
-                              fontSize: 18.1,
+                              fontSize: font4,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff70bea4),
+                              color: const Color(0xff70bea4),
                             ),
                           ),
                         ],
@@ -163,12 +180,15 @@ class DiscountCouponCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Limited ' + maxredeemper + ' Only',
+                      'Limited ' + widget.maxredeemper + ' Only',
                       style: TextStyle(fontSize: 10, color: Colors.white),
                     ),
+                    SizedBox(
+                      height: 1,
+                    ),
                     Text(
-                      period,
-                      style: TextStyle(fontSize: 10, color: Colors.white),
+                      widget.period,
+                      style: TextStyle(fontSize: font2, color: Colors.white),
                     ),
                   ],
                 ),
