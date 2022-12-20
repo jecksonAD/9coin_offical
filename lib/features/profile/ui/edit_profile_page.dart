@@ -170,8 +170,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           await showUpdatedSuccessfulDialog(
                                                   context, value)
                                               .then((value) {
-                                            Navigator.push(context,
-                                                ProfileDetailsPage.route());
+                                            /*   Navigator.push(context,
+                                                ProfileDetailsPage.route());*/
                                           });
                                         }).catchError((err) async {
                                           await showErrorDialog(
@@ -199,8 +199,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       await showUpdatedSuccessfulDialog(
                                               context, value)
                                           .then((value) {
-                                        Navigator.push(context,
-                                            ProfileDetailsPage.route());
+                                        /*   Navigator.push(context,
+                                            ProfileDetailsPage.route());*/
                                       });
                                     }).catchError((err) async {
                                       await showErrorDialog(

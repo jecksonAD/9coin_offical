@@ -167,24 +167,25 @@ class _ProfilePageState extends State<ProfilePage> {
               },
             ),
             ProfileTile(
-              imageUrl: Assets.logout,
-              title: "Logout",
-              isShowDivider: false,
-              onTap: () async {
-                if (await showLogoutAccountDialog(context)) {
-                  if (await showSuccessfulLogoutDialog(context)) {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
+                imageUrl: Assets.logout,
+                title: "Logout",
+                isShowDivider: false,
+                onTap: () async {
+                  if (await showLogoutAccountDialog(context)) {
+                    if (await showSuccessfulLogoutDialog(context)) {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
 
-                    prefs.clear();
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                        (route) => false);
-                  },
-                );
-              }
-            }));
+                      prefs.clear();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                          (route) => false);
+                    }
+                  }
+                }),
+          ],
+        ));
   }
 }
