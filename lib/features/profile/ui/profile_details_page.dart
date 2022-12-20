@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
@@ -10,7 +8,6 @@ import 'package:ninecoin/features/profile/components/profile_circular_picture.da
 import 'package:ninecoin/features/profile/components/profile_tile.dart';
 import 'package:ninecoin/features/profile/services/profile_service.dart';
 import 'package:ninecoin/features/profile/services/get_image.dart';
-import 'package:ninecoin/features/profile/services/profile_imagemodel.dart';
 import 'package:ninecoin/features/profile/ui/edit_profile_page.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -18,87 +15,26 @@ import '../../../config/helper/common/get_user_info.dart' as getid;
 import '../../auth/services/auth.dart';
 
 class ProfileDetailsPage extends StatefulWidget {
-  static Route<ProfileDetailsPage> route() {
-    return MaterialPageRoute(builder: (context) => ProfileDetailsPage());
+  static Route<ProfileDetailsPage> route(
+      Map<dynamic, dynamic> data, String? imageUrl) {
+    return MaterialPageRoute(
+        builder: (context) => ProfileDetailsPage(
+              data: data,
+              imageUrl: imageUrl!,
+            ));
   }
+
+  final String? imageUrl;
+  final Map<dynamic, dynamic> data;
+  const ProfileDetailsPage({Key? key, required this.data, this.imageUrl})
+      : super(key: key);
 
   @override
   State<ProfileDetailsPage> createState() => _ProfileDetailsPageState();
 }
 
 class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
-  Map<dynamic, dynamic>? datas;
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
-  var _scaffoldKey = GlobalKey<ScaffoldState>();
-  late bool loading = true;
-  void initState() {
-    // TODO: implement initState
-
-    getid.getUserId().then((value) {
-      getUserdata(id: value.toString()).then((value) {
-        localUser().then((value) {
-          setState(() {
-            datas = value;
-            loading = false;
-          });
-        });
-      });
-    });
-    super.initState();
-  }
-
-  void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-
-    _refreshController.refreshCompleted();
-    setState(() {
-      initState();
-    });
-  }
-
-  void _onLoading() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    // if failed,use loadFailed(),if no data return,use LoadNodata()
-    if (mounted) setState(() {});
-    _refreshController.loadComplete();
-    setState(() {
-      initState();
-    });
-  }
-
-  Future<String> getUseravatar() async {
-    var http;
-    var responce = await http.get(Uri.parse(
-        'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
-    // setState(() {
-    //   profileImageModel = profileImageModel.fromJson(responce[])
-    // });
-
-    if (responce.statusCode == 200) {
-      print(json.decode(responce.body));
-      return json.decode(responce.body);
-    } else {
-      throw responce.body;
-    }
-  }
-
-  Future<ImageGet> getUserImage() async {
-    var http;
-    var responce = await http.get(Uri.parse(
-        'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
-    // setState(() {
-    //   profileImageModel = profileImageModel.fromJson(responce[])
-    // });
-
-    if (responce.statusCode == 200) {
-      return ImageGet.fromJson(json.decode(responce.body));
-    } else {
-      throw responce.body;
-    }
-  }
+  final Text text = Text("");
 
   @override
   Widget build(BuildContext context) {
@@ -121,54 +57,48 @@ class _ProfileDetailsPageState extends State<ProfileDetailsPage> {
           const SizedBox(width: 20.0),
         ],
       ),
-      body: SmartRefresher(
-        enablePullDown: true,
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        enablePullUp: true,
-        child: loading
-            ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(18, 16, 18, 35),
-                    alignment: Alignment.center,
-                    color: CoinColors.black12,
-                    child: Column(
-                      children: [
-                        ProfileCircularPicture(
-                          imageUrl: datas!['avatarphotourl'].toString(),
-                        ),
-                        const SizedBox(height: 10),
-                        Text("${datas!['phonenumber']}",
-                            style: CoinTextStyle.title4
-                                .copyWith(color: CoinColors.orange)),
-                        Text("${datas!['name']}",
-                            style: CoinTextStyle.title1Bold
-                                .copyWith(fontSize: 22)),
-                        Text("${datas!['email']}"),
-                      ],
-                    ),
-                  ),
-                  EditProfileTile(
-                    imageUrl: Assets.gender,
-                    title1: "Gender",
-                    title2: "${datas!['gender']}",
-                  ),
-                  EditProfileTile(
-                    imageUrl: Assets.phone,
-                    title1: "Contact Number",
-                    title2: "${datas!['phonenumber']}",
-                  ),
-                  EditProfileTile(
-                    imageUrl: Assets.email,
-                    title1: "Address",
-                    title2: "${datas!['address']}",
-                    isShowDivider: false,
-                  ),
-                ],
-              ),
+      body: ListView(
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(18, 16, 18, 35),
+            alignment: Alignment.center,
+            color: CoinColors.black12,
+            child: Column(
+              children: [
+                ProfileCircularPicture(
+                  imageUrl: widget.imageUrl != null
+                      ? widget.imageUrl
+                      : widget.data != null
+                          ? ""
+                          : widget.data!['profile_photo_url'].toString(),
+                ),
+                const SizedBox(height: 10),
+                Text("${widget.data!['phonenumber']}",
+                    style: CoinTextStyle.title4
+                        .copyWith(color: CoinColors.orange)),
+                Text("${widget.data!['name']}",
+                    style: CoinTextStyle.title1Bold.copyWith(fontSize: 22)),
+                Text("${widget.data!['email']}"),
+              ],
+            ),
+          ),
+          EditProfileTile(
+            imageUrl: Assets.gender,
+            title1: "Gender",
+            title2: "${widget.data!['gender']}",
+          ),
+          EditProfileTile(
+            imageUrl: Assets.phone,
+            title1: "Contact Number",
+            title2: "${widget.data!['phonenumber']}",
+          ),
+          EditProfileTile(
+            imageUrl: Assets.email,
+            title1: "Address",
+            title2: "${widget.data!['address']}",
+            isShowDivider: false,
+          ),
+        ],
       ),
     );
   }

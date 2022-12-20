@@ -21,9 +21,7 @@ import 'package:ninecoin/features/profile/services/profile_imagemodel.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/update_details_dialog.dart';
 import 'package:ninecoin/utilities/dialogs/updated_successful_dialog.dart';
-import 'package:ninecoin/widgets/drop_down_button_with_title.dart';
 import 'package:ninecoin/widgets/text_field_with_title.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utilities/dialogs/error_dialoge.dart';
 import '../components/profile_circular_picture.dart';
@@ -31,6 +29,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../services/upload_image.dart';
 import 'profile_details_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 @immutable
 class EditProfilePage extends StatefulWidget {
@@ -54,7 +53,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final picker = ImagePicker();
   late String userid;
   bool showSpinner = false;
-  // NetworkHandler networkHandler = NetworkHandler()
   final ValueNotifier<int> _notifier = ValueNotifier(0);
 
   @override
@@ -68,9 +66,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Future<ImageGet> getUserImage() async {
     var responce = await http.get(Uri.parse(
         'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
-    // setState(() {
-    //   profileImageModel = profileImageModel.fromJson(responce[])
-    // });
 
     if (responce.statusCode == 200) {
       return ImageGet.fromJson(json.decode(responce.body));
@@ -325,15 +320,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _image = image;
     });
   }
-
-  // Future pickImage() async {
-  //   final ImagePicker picker = ImagePicker();
-  //   try {
-  //     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-  //   } catch (e) {
-  //     log("Error: $e");
-  //   }
-  // }
 }
 
 class _InputCountry extends StatefulWidget {

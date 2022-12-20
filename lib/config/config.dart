@@ -52,6 +52,8 @@ class Api {
   static const _GetCashBackTransaction = "/cashbacktransactionlist";
   static const _GetProductTransaction = "/producttransactionlist";
   static const _editUser = "/edit";
+  static const _uploadimage = "/upload_pic";
+  static const _getuserimage = "/profile_pic";
 
   static String baseUrl = "$_base$_api";
   static String login = "$_base$_api$_login";
@@ -106,4 +108,6 @@ class Api {
   static String edituser = "$_base$_api$_editUser";
   static String showpurchasedproductdetail =
       "$_base$_api$_showpurchasedproductdetail";
+  static String uploadimage = "$_base$_api$_uploadimage";
+  static String getuserimage = "$_base$_api$_getuserimage";
 }
