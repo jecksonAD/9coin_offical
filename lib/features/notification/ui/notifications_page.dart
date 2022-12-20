@@ -50,6 +50,8 @@ class NotificationPage extends StatelessWidget {
                 title: notification.data[index].type,
                 subtitle: notification.data[index].data,
                 date: notification.data[index].createdAt,
+                notifiable_type: notification.data[index].notifiableType,
+                notifiable_id: notification.data[index].notifiableId.toString(),
               );
             }),
       ),

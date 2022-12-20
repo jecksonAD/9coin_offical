@@ -5,6 +5,7 @@ import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/coupon/components/discount_coupon_card.dart';
 import 'package:ninecoin/features/notification/ui/notifications_page.dart';
 import 'package:ninecoin/features/profile/ui/profile_page.dart';
+import 'package:ninecoin/model/auth/login/login_response.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 
 import '../../home/components/circle_icon.dart';
@@ -111,6 +112,7 @@ class ActiveDiscountCopoun extends StatelessWidget {
                     children: [
                       const SizedBox(height: 6),
                       DiscountCouponCard(
+                          data: snapshot.data![index],
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => ActiveCouponDetails(
@@ -185,6 +187,7 @@ class _PurchasedDiscountCopounState extends State<PurchasedDiscountCopoun> {
                     children: [
                       const SizedBox(height: 6),
                       DiscountCouponCard(
+                          data: snapshot.data![index],
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => PurchasedCouponDetails(

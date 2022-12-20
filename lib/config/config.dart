@@ -24,6 +24,7 @@ class Api {
   static const _GetProductList = "/redeemProuct_list";
   static const _GetProductDetail = "/redeemproductdetail";
   static const _Newslist = "/newslist";
+  static const _NewsDetaillist = "/newsdetail";
   static const _Luckydrawpartcipants = "/getluckydrawlist";
   static const _LuckydrawpartcipantsList = "/getluckydrawlists";
   static const _Buyluckydraw = "/buyluckydraw";
@@ -78,6 +79,7 @@ class Api {
   static String redeemproductlist = "$_base$_api$_GetProductList";
   static String redeemproductdetail = "$_base$_api$_GetProductDetail";
   static String newslist = "$_base$_api$_Newslist";
+  static String newsdetail = "$_base$_api$_NewsDetaillist";
   static String getluckydrawlist = "$_base$_api$_Luckydrawpartcipants";
   static String getluckydrawlists = "$_base$_api$_LuckydrawpartcipantsList";
   static String getluckydrawinfo = "$_base$_api$_LuckydrawInfo";

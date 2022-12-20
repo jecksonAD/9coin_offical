@@ -49,7 +49,7 @@ class _ActiveCouponDetailsState extends State<ActiveCouponDetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    font1 = size.width * 1.0;
+    font1 = size.width * 0.04;
     font2 = size.height * 0.1;
     font3 = size.height * 0.2;
     font4 = size.height * 0.3;
@@ -84,6 +84,14 @@ class _ActiveCouponDetailsState extends State<ActiveCouponDetails> {
                         ),
                         const SizedBox(height: 12),
                         Text(
+                          "Period Of Redeem",
+                          style: CoinTextStyle.title3Bold.copyWith(
+                              color: CoinColors.orange, fontSize: font1),
+                        ),
+                        Text(snapshot.data![0]['SEdate'].toString()),
+                        const SizedBox(height: 12),
+                        const Divider(thickness: 2),
+                        Text(
                           snapshot.data![0]['title'].toString(),
                           style: CoinTextStyle.title3Bold.copyWith(
                               color: CoinColors.orange, fontSize: font1),
@@ -98,16 +106,16 @@ class _ActiveCouponDetailsState extends State<ActiveCouponDetails> {
                         const Divider(thickness: 2),
                         const SizedBox(height: 12),
                         Text("Our Service",
-                            style: CoinTextStyle.title3Bold
-                                .copyWith(color: CoinColors.orange)),
+                            style: CoinTextStyle.title3Bold.copyWith(
+                                color: CoinColors.orange, fontSize: font1)),
                         Text(snapshot.data![0]['servicename'].toString()),
                         const SizedBox(height: 12),
                         const Divider(thickness: 2),
                         const SizedBox(height: 12),
                         Text(
                           "Term and Condition",
-                          style: CoinTextStyle.title3Bold
-                              .copyWith(color: CoinColors.orange),
+                          style: CoinTextStyle.title3Bold.copyWith(
+                              color: CoinColors.orange, fontSize: font1),
                         ),
                         Column(
                           children: <Widget>[

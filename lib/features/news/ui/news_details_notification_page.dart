@@ -6,19 +6,20 @@ import 'package:ninecoin/typography/text_styles.dart';
 
 import '../../../model/news/news_model.dart';
 
-class NewsDetailsPage extends StatelessWidget {
-  static route({required List news, required int index}) {
+class NewsDetailsNotificationPage extends StatelessWidget {
+  static route({required GetNews news, required int index}) {
     return MaterialPageRoute(
-      builder: (context) => NewsDetailsPage(
+      builder: (context) => NewsDetailsNotificationPage(
         news: news,
         index: index,
       ),
     );
   }
 
-  final List news;
+  final GetNews news;
   final int index;
-  const NewsDetailsPage({Key? key, required this.news, required this.index})
+  const NewsDetailsNotificationPage(
+      {Key? key, required this.news, required this.index})
       : super(key: key);
 
   @override
@@ -43,17 +44,17 @@ class NewsDetailsPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                        child: Image.network(news[index]['photo'],
+                        child: Image.network(news.data[index].photo,
                             fit: BoxFit.cover)),
                   ],
                 ),
               ),
-              Text(news[index]['date'],
+              Text(news.data[index].date,
                   style:
                       CoinTextStyle.title4.copyWith(color: CoinColors.black54)),
-              Text(news[index]['name'], style: CoinTextStyle.orangeTitle2),
+              Text(news.data[index].name, style: CoinTextStyle.orangeTitle2),
               const SizedBox(height: 6),
-              Text(news[index]['description'], style: CoinTextStyle.title3),
+              Text(news.data[index].description, style: CoinTextStyle.title3),
               const SizedBox(height: 24),
               Container(
                 margin: const EdgeInsets.only(bottom: 12.0),
@@ -66,7 +67,7 @@ class NewsDetailsPage extends StatelessWidget {
                       children: [
                         Expanded(
                             child: Image.network(
-                                news[index]['Extended_Images'][0]['img'],
+                                news.data[index].extendedImages[0].img,
                                 fit: BoxFit.cover)),
                       ],
                     )),
@@ -74,19 +75,8 @@ class NewsDetailsPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              Column(
-                children: <Widget>[
-                  for (int i = 0; i < news[index]['news1count']; i++)
-                    Column(
-                      children: [
-                        Text(news[index]['news_1' + i.toString()],
-                            textAlign: TextAlign.left,
-                            style: CoinTextStyle.title3),
-                        const SizedBox(height: 12),
-                      ],
-                    ),
-                ],
-              ),
+              Text(news.data[index].extendedDescriptions[0].desc,
+                  style: CoinTextStyle.title3),
               Container(
                 margin: const EdgeInsets.only(bottom: 12, top: 12),
                 constraints: const BoxConstraints.expand(
@@ -95,41 +85,15 @@ class NewsDetailsPage extends StatelessWidget {
                   children: [
                     Expanded(
                         child: Image.network(
-                            news[index]['Extended_Images'][1]['img'],
-                            fit: BoxFit.cover)),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-              Column(
-                children: <Widget>[
-                  for (int i = 0; i < news[index]['news2count']; i++)
-                    Column(
-                      children: [
-                        Text(news[index]['news_2' + i.toString()],
-                            style: CoinTextStyle.title3),
-                        const SizedBox(height: 12),
-                      ],
-                    ),
-                ],
-              ),
-              /* 
-              Container(
-                margin: const EdgeInsets.only(bottom: 12, top: 12),
-                constraints: const BoxConstraints.expand(
-                    width: double.infinity, height: 240),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Image.network(news[index].extendedImages[1].img,
+                            news.data[index].extendedImages[1].img,
                             fit: BoxFit.cover)),
                   ],
                 ),
               ),
               Text(
-                news[index].extendedDescriptions[1].desc,
+                news.data[index].extendedDescriptions[1].desc,
                 style: CoinTextStyle.title3,
-              ),*/
+              ),
             ],
           ),
         ),

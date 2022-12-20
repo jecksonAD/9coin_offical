@@ -8,44 +8,53 @@ import '../../../model/news/news_model.dart';
 import 'news_details_page.dart';
 
 // ignore: must_be_immutable
-class NewsPage extends StatelessWidget {
+class NewsPage extends StatefulWidget {
   NewsPage({Key? key}) : super(key: key);
 
-  late GetNews news;
+  @override
+  State<NewsPage> createState() => _NewsPageState();
+}
+
+class _NewsPageState extends State<NewsPage> {
+  //late GetNews news;
+  late List news;
+  bool loading = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    getNewsDetail().then((value) {
+      setState(() {
+        loading = false;
+        print(value);
+        news = value;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: CoinColors.black,
-      child: FutureBuilder<GetNews>(
-        future: getNews(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            );
-          }
-          news = snapshot.data!;
-          return ListView.builder(
+    return !loading
+        ? ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            itemCount: news.data.length,
+            itemCount: news.length,
             itemBuilder: (context, index) {
               return RoundedNewsCard(
                 onTap: () {
                   Navigator.push(
                       context, NewsDetailsPage.route(news: news, index: index));
                 },
-                imageUrl: news.data[index].photo,
-                date: news.data[index].date,
-                title: news.data[index].name,
-                desc: news.data[index].description,
+                imageUrl: news[index]['photo'],
+                date: news[index]['date'],
+                title: news[index]['name'],
+                desc: news[index]['description'],
               );
             },
+          )
+        : Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
           );
-        },
-      ),
-    );
   }
 }

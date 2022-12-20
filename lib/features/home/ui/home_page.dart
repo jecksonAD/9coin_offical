@@ -98,30 +98,40 @@ class _HomePageState extends State<HomePage> {
     _refreshController.refreshCompleted();
 
     if (currentPage == 0) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const App(
-                page: 0,
-              )));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const App(
+                    page: 0,
+                  )),
+          (Route<dynamic> route) => false);
     } else if (currentPage == 1) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const App(
-                page: 1,
-              )));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const App(
+                    page: 1,
+                  )),
+          (Route<dynamic> route) => false);
     } else if (currentPage == 2) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const App(
-                page: 2,
-              )));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const App(
+                    page: 2,
+                  )),
+          (Route<dynamic> route) => false);
     } else if (currentPage == 3) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const App(
-                page: 3,
-              )));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const App(
+                    page: 3,
+                  )),
+          (Route<dynamic> route) => false);
     } else if (currentPage == 4) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const App(
-                page: 4,
-              )));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => const App(
+                    page: 4,
+                  )),
+          (Route<dynamic> route) => false);
     }
   }
 
@@ -439,7 +449,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                SingleChildScrollView(
+                /*  SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: FutureBuilder<GetNews>(
                       future: FeatureNews(),
@@ -466,7 +476,7 @@ class HomeScreen extends StatelessWidget {
                         } else
                           return Center(child: CircularProgressIndicator());
                       }),
-                ),
+                ),*/
               ],
             ),
           ],

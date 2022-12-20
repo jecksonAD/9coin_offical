@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/assets/assets.dart';
 
+import '../ui/active_coupon_details.dart';
+
 class DiscountCouponCard extends StatefulWidget {
   final String imageUrl;
   final String maxredeemper;
@@ -8,6 +10,7 @@ class DiscountCouponCard extends StatefulWidget {
   final String originalpoint;
   final String promopoint;
   final String period;
+  final dynamic data;
   final Function()? onTap;
   const DiscountCouponCard(
       {Key? key,
@@ -17,6 +20,7 @@ class DiscountCouponCard extends StatefulWidget {
       required this.originalpoint,
       required this.promopoint,
       required this.period,
+      required this.data,
       this.onTap})
       : super(key: key);
 
@@ -73,13 +77,13 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      /* Text(
                         widget.title,
                         style: TextStyle(
                             fontSize: font1,
                             color: Color(0xff70bea4),
                             fontWeight: FontWeight.bold),
-                      ),
+                      ),*/
                       SizedBox(
                         height: 3,
                       ),
@@ -88,32 +92,59 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                           const Text(
                             'Point:',
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 15,
                               color: Color(0xff70bea4),
                             ),
                           ),
                           Text(
                             widget.promopoint,
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
                               color: Color(0xff70bea4),
                             ),
                           ),
                         ],
                       ),
                       Text(
-                        'Point: ' + widget.originalpoint,
+                        'point: ' + widget.originalpoint,
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           decorationColor: Colors.red,
-                          fontSize: 11,
+                          fontSize: 15,
                           color: Color(0xff70bea4),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10, left: 15),
+                        child: Container(
+                          width: 100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff70bea4),
+                            ),
+                            onPressed: () {
+                              widget.onTap!();
+                              /* Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ActiveCouponDetails(
+                                        widget.data!['id'],
+                                      )));
+                              print(widget.data);*/
+                            },
+                            child: Text(
+                              'Collect',
+                              style: TextStyle(
+                                  fontSize: font1,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Padding(
+                          /*  Padding(
                             padding: EdgeInsets.only(top: 4),
                             child: Text(
                               'SAVE',
@@ -133,7 +164,7 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                               fontWeight: FontWeight.bold,
                               color: const Color(0xff70bea4),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ]),
@@ -141,7 +172,7 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
             ),
           ],
         ),
-        Positioned(
+        /* Positioned(
             left: size.width * 0.525,
             child: Container(
               height: 11,
@@ -193,7 +224,7 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                   ],
                 ),
               ),
-            )),
+            )),*/
       ]),
     );
   }

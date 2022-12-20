@@ -42,7 +42,7 @@
 
 
    
-        android:label="ninecoin"
+        android:label="9Com"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
