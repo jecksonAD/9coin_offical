@@ -68,7 +68,7 @@ class _PointPageState extends State<PointPage> {
                   onTap: () {
                     Navigator.push(context, BuyPointPackagePage.route());
                   },
-                  title: "Buy Point Package",
+                  title: "Buy Point",
                 ),
                 PointOptionCard(
                   imageUrl: Assets.qrcode,

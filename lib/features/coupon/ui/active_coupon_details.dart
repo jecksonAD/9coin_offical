@@ -92,6 +92,14 @@ class _ActiveCouponDetailsState extends State<ActiveCouponDetails> {
                         const SizedBox(height: 12),
                         const Divider(thickness: 2),
                         Text(
+                          "Max Redeem Per Person",
+                          style: CoinTextStyle.title3Bold.copyWith(
+                              color: CoinColors.orange, fontSize: font1),
+                        ),
+                        Text(snapshot.data![0]['maxredeemperson'].toString()),
+                        const SizedBox(height: 12),
+                        const Divider(thickness: 2),
+                        Text(
                           snapshot.data![0]['title'].toString(),
                           style: CoinTextStyle.title3Bold.copyWith(
                               color: CoinColors.orange, fontSize: font1),

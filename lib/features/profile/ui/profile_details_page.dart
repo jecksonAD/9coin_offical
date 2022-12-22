@@ -16,7 +16,7 @@ import '../../auth/services/auth.dart';
 
 class ProfileDetailsPage extends StatefulWidget {
   static Route<ProfileDetailsPage> route(
-      Map<dynamic, dynamic> data, String? imageUrl) {
+      Map<dynamic, dynamic>? data, String? imageUrl) {
     return MaterialPageRoute(
         builder: (context) => ProfileDetailsPage(
               data: data,
@@ -25,7 +25,7 @@ class ProfileDetailsPage extends StatefulWidget {
   }
 
   final String? imageUrl;
-  final Map<dynamic, dynamic> data;
+  final Map<dynamic, dynamic>? data;
   const ProfileDetailsPage({Key? key, required this.data, this.imageUrl})
       : super(key: key);
 

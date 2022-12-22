@@ -41,9 +41,9 @@ class BuyPointCardTile extends StatelessWidget {
                 color: CoinColors.dialogTextColor,
                 height: 2,
               ),
-              text: "$point",
+              //  text: "$point",
               children: [
-                const TextSpan(
+                /*  const TextSpan(
                   text: " ",
                 ),
                 TextSpan(
@@ -56,7 +56,7 @@ class BuyPointCardTile extends StatelessWidget {
                 const TextSpan(
                   style: TextStyle(color: CoinColors.white),
                   text: "-",
-                ),
+                ),*/
                 const TextSpan(
                   text: " ",
                 ),

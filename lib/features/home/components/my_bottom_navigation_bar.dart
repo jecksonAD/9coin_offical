@@ -35,7 +35,7 @@ class MyBottomNavigationBar extends StatelessWidget {
             icon: Image.asset(Assets.coupon, height: 24, width: 24),
             selectedIcon:
                 Image.asset(Assets.couponColor, height: 24, width: 24),
-            label: 'Coupon',
+            label: 'Product',
           ),
         ),
         Container(

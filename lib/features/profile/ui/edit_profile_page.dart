@@ -27,6 +27,7 @@ import '../../../utilities/dialogs/error_dialoge.dart';
 import '../components/profile_circular_picture.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../services/get_image.dart';
 import '../services/upload_image.dart';
 import 'profile_details_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,17 +63,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   ImageGet profileImageModel = ImageGet();
-
-  Future<ImageGet> getUserImage() async {
-    var responce = await http.get(Uri.parse(
-        'http://9coinapi.ap-southeast-1.elasticbeanstalk.com/api/profile_pic'));
-
-    if (responce.statusCode == 200) {
-      return ImageGet.fromJson(json.decode(responce.body));
-    } else {
-      throw responce.body;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,8 +138,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           child: ElevatedButton(
                               onPressed: () async {
                                 if (_image != null) {
-                                  // print(_image);
-                                  uploadImage(_image!).then((value) {
+                                  Map<dynamic, dynamic>? data;
+                                  ImageGet? image;
+                                  String? imageUrl;
+                                  print(_image);
+                                  uploadImage(_image!.path).then((value) {
                                     setState(() async {
                                       SharedPreferences prefs =
                                           await SharedPreferences.getInstance();
@@ -170,15 +163,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                           await showUpdatedSuccessfulDialog(
                                                   context, value)
                                               .then((value) {
-                                            /*   Navigator.push(context,
-                                                ProfileDetailsPage.route());*/
+                                            localUser().then((value) {
+                                              data = value;
+                                              getUserImage().then((value) {
+                                                image = value;
+                                                imageUrl = image!.profilePic;
+                                                print('wahts');
+                                                Navigator.push(
+                                                    context,
+                                                    ProfileDetailsPage.route(
+                                                        data, imageUrl));
+                                              });
+                                            });
                                           });
                                         }).catchError((err) async {
                                           await showErrorDialog(
                                               context, "Error", "$err");
                                         });
-
-                                        //await showUpdatedSuccessfulDialog(context);
                                       }
                                     });
                                   });

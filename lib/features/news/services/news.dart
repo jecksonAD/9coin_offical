@@ -14,9 +14,28 @@ Future<dynamic> getNewsDetail() async {
       "Content-Type": "application/json",
     },
   );
+  //print(url);
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    //print(json.decode(response.body)['data']);
+    return json.decode(response.body)['data'];
+  } else {
+    throw json.decode(response.body)["error"];
+  }
+}
+
+Future<dynamic> getFeauturesNews() async {
+  String url = Api.newslist;
+  var uri = Uri.parse(url);
+
+  var response = await http.get(
+    uri,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  );
   print(url);
   if (response.statusCode == 200 || response.statusCode == 201) {
-    print(json.decode(response.body)['data']);
+    // print(json.decode(response.body)['data']);
     return json.decode(response.body)['data'];
   } else {
     throw json.decode(response.body)["error"];

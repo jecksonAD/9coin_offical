@@ -69,27 +69,18 @@ class _ProfilePageState extends State<ProfilePage> {
                           FutureBuilder<ImageGet>(
                               future: getUserImage(),
                               builder: (context, snap) {
-                                print('hello');
                                 if (!snap.hasData) {
-                                  print('how are you');
-
                                   return ProfileCircularPicture(
                                       imageUrl: imageUrl);
                                 }
 
                                 image = snap.data;
-                                // print('sdsd');
 
                                 imageUrl = image!.profilePic!;
-                                print('sdsd');
 
                                 return ProfileCircularPicture(
                                     imageUrl: imageUrl);
                               }),
-                          Container(
-                            height: 100,
-                            width: 50,
-                          ),
                           Padding(
                             padding: EdgeInsets.only(left: 24),
                             child: Column(

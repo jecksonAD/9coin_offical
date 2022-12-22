@@ -119,6 +119,7 @@ class ActiveDiscountCopoun extends StatelessWidget {
                                       snapshot.data![index]['id'],
                                     )));
                           },
+                          page: "Buy",
                           period: snapshot.data![index]['SEdate'].toString(),
                           imageUrl:
                               snapshot.data![index]['imageurl'].toString(),
@@ -194,6 +195,7 @@ class _PurchasedDiscountCopounState extends State<PurchasedDiscountCopoun> {
                                     snapshot.data![index]['id'],
                                     snapshot.data![index]['couponid'])));
                           },
+                          page: "Collect",
                           period: "null",
                           imageUrl:
                               snapshot.data![index]['imageurl'].toString(),

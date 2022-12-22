@@ -48,6 +48,7 @@ class NotificationPage extends StatelessWidget {
                     ),
                     color: CoinColors.orange),
                 title: notification.data[index].type,
+                //data: notification.data[index].data,
                 subtitle: notification.data[index].data,
                 date: notification.data[index].createdAt,
                 notifiable_type: notification.data[index].notifiableType,

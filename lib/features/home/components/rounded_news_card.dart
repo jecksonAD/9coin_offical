@@ -78,13 +78,17 @@ class RoundedNewsCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(date,
-                            style: CoinTextStyle.title5
-                                .copyWith(color: CoinColors.black54)),
-                        Text(title,
-                            style: CoinTextStyle.title4.copyWith(
-                              color: CoinColors.orange,
-                            )),
+                        Expanded(
+                          child: Text(date,
+                              style: CoinTextStyle.title5
+                                  .copyWith(color: CoinColors.black54)),
+                        ),
+                        Expanded(
+                          child: Text(title,
+                              style: CoinTextStyle.title4.copyWith(
+                                color: CoinColors.orange,
+                              )),
+                        ),
                         Flexible(
                             child: Text(desc, style: CoinTextStyle.title4)),
                       ],

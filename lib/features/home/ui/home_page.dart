@@ -232,7 +232,7 @@ class HomeScreen extends StatelessWidget {
   Merchant getdata = Merchant();
   Category getcategorydata = Category();
   HomeScreen({Key? key}) : super(key: key);
-  late GetNews news;
+  late List news;
   Widget newspage = NewsPage();
   @override
   Widget build(BuildContext context) {
@@ -449,26 +449,27 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                /*  SingleChildScrollView(
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: FutureBuilder<GetNews>(
-                      future: FeatureNews(),
+                  child: FutureBuilder<dynamic>(
+                      future: getFeauturesNews(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           news = snapshot.data!;
                           return Row(
                             children: <Widget>[
-                              for (int i = 0; i < news.data.length; i++)
+                              for (int i = 0; i < news.length; i++)
                                 RoundedNewsCard(
                                   onTap: () {
+                                    //  print(news);
                                     Navigator.push(
                                         context,
                                         NewsDetailsPage.route(
                                             news: news, index: i));
                                   },
-                                  imageUrl: news.data[i].photo,
-                                  date: news.data[i].date,
-                                  title: news.data[i].name,
+                                  imageUrl: news[i]['photo'],
+                                  date: news[i]['date'],
+                                  title: news[i]['name'],
                                   desc: "",
                                 )
                             ],
@@ -476,7 +477,7 @@ class HomeScreen extends StatelessWidget {
                         } else
                           return Center(child: CircularProgressIndicator());
                       }),
-                ),*/
+                ),
               ],
             ),
           ],

@@ -11,6 +11,7 @@ class DiscountCouponCard extends StatefulWidget {
   final String promopoint;
   final String period;
   final dynamic data;
+  final String page;
   final Function()? onTap;
   const DiscountCouponCard(
       {Key? key,
@@ -21,6 +22,7 @@ class DiscountCouponCard extends StatefulWidget {
       required this.promopoint,
       required this.period,
       required this.data,
+      required this.page,
       this.onTap})
       : super(key: key);
 
@@ -90,7 +92,7 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                       Row(
                         children: [
                           const Text(
-                            'Point:',
+                            'RM:',
                             style: TextStyle(
                               fontSize: 15,
                               color: Color(0xff70bea4),
@@ -107,7 +109,7 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                         ],
                       ),
                       Text(
-                        'point: ' + widget.originalpoint,
+                        'RM: ' + widget.originalpoint,
                         style: const TextStyle(
                           decoration: TextDecoration.lineThrough,
                           decorationColor: Colors.red,
@@ -116,9 +118,10 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 10, left: 15),
+                        padding: EdgeInsets.only(top: 10, left: 30),
                         child: Container(
-                          width: 100,
+                          width: 80,
+                          height: 40,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xff70bea4),
@@ -132,9 +135,9 @@ class _DiscountCouponCardState extends State<DiscountCouponCard> {
                               print(widget.data);*/
                             },
                             child: Text(
-                              'Collect',
+                              widget.page,
                               style: TextStyle(
-                                  fontSize: font1,
+                                  fontSize: font1 * 0.85,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
