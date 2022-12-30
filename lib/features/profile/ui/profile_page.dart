@@ -20,6 +20,7 @@ import 'package:ninecoin/widgets/lucky_draw_information_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../config/helper/common/get_user_info.dart';
 import '../../auth/ui/change_password.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -37,146 +38,171 @@ class _ProfilePageState extends State<ProfilePage> {
   ImageGet? image;
   Map<dynamic, dynamic>? data;
   String? imageUrl;
+  bool login = false;
+
   @override
   void initState() {
     // TODO: implement initState
+
+    getUserId().then((value) {
+      if (value != 0) {
+        login = true;
+      }
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("Profile", style: CoinTextStyle.title1Bold),
-          elevation: 0,
-        ),
-        body: ListView(
-          children: [
-            FutureBuilder(
-                future: localUser(),
-                builder: (_, AsyncSnapshot<Map?> snapshot) {
-                  if (snapshot.hasData) {
-                    imageUrl = snapshot.data!['profile_photo_url'].toString();
-                    data = snapshot.data;
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Profile", style: CoinTextStyle.title1Bold),
+        elevation: 0,
+      ),
+      body: login
+          ? ListView(
+              children: [
+                FutureBuilder(
+                    future: localUser(),
+                    builder: (_, AsyncSnapshot<Map?> snapshot) {
+                      if (snapshot.hasData) {
+                        imageUrl =
+                            snapshot.data!['profile_photo_url'].toString();
+                        data = snapshot.data;
 
-                    return Container(
-                      padding: EdgeInsets.fromLTRB(18, 16, 18, 28),
-                      alignment: Alignment.centerLeft,
-                      color: CoinColors.black12,
-                      child: Row(
-                        children: [
-                          FutureBuilder<ImageGet>(
-                              future: getUserImage(),
-                              builder: (context, snap) {
-                                if (!snap.hasData) {
-                                  return ProfileCircularPicture(
-                                      imageUrl: imageUrl);
-                                }
+                        return Container(
+                          padding: EdgeInsets.fromLTRB(18, 16, 18, 28),
+                          alignment: Alignment.centerLeft,
+                          color: CoinColors.black12,
+                          child: Row(
+                            children: [
+                              FutureBuilder<ImageGet>(
+                                  future: getUserImage(),
+                                  builder: (context, snap) {
+                                    if (!snap.hasData) {
+                                      return ProfileCircularPicture(
+                                          imageUrl: imageUrl);
+                                    }
 
-                                image = snap.data;
+                                    image = snap.data;
 
-                                imageUrl = image!.profilePic!;
+                                    imageUrl = image!.profilePic!;
 
-                                return ProfileCircularPicture(
-                                    imageUrl: imageUrl);
-                              }),
-                          Padding(
-                            padding: EdgeInsets.only(left: 24),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("ID:${snapshot.data!['id']}",
-                                    style: CoinTextStyle.title4
-                                        .copyWith(color: CoinColors.orange)),
-                                Text("${snapshot.data!['name']}",
-                                    style: CoinTextStyle.title1Bold),
-                                Text("${snapshot.data!['email']}"),
-                                const SizedBox(height: 6),
-                                Row(
-                                  textBaseline: TextBaseline.alphabetic,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.baseline,
+                                    return ProfileCircularPicture(
+                                        imageUrl: imageUrl);
+                                  }),
+                              Padding(
+                                padding: EdgeInsets.only(left: 24),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("${snapshot.data!['point']}",
-                                        style: CoinTextStyle.title1Bold
-                                            .copyWith(
-                                                color: CoinColors.orange,
-                                                fontSize: 22)),
-                                    const SizedBox(width: 2),
-                                    Text("Point", style: CoinTextStyle.title5)
+                                    Text("ID:${snapshot.data!['id']}",
+                                        style: CoinTextStyle.title4.copyWith(
+                                            color: CoinColors.orange)),
+                                    Text("${snapshot.data!['name']}",
+                                        style: CoinTextStyle.title1Bold),
+                                    Text("${snapshot.data!['email']}"),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      textBaseline: TextBaseline.alphabetic,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.baseline,
+                                      children: [
+                                        Text("${snapshot.data!['point']}",
+                                            style: CoinTextStyle.title1Bold
+                                                .copyWith(
+                                                    color: CoinColors.orange,
+                                                    fontSize: 22)),
+                                        const SizedBox(width: 2),
+                                        Text("Point",
+                                            style: CoinTextStyle.title5)
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                }),
-            ProfileTile(
-              imageUrl: Assets.profileIcon,
-              title: "Profile Details",
-              onTap: () {
-                Navigator.push(
-                    context, ProfileDetailsPage.route(data!, imageUrl!));
-              },
-            ),
-            ProfileTile(
-              imageUrl: Assets.changePassword2,
-              title: "Change Password",
-              onTap: () async {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ChangePasswordPage()));
-              },
-            ),
-            ProfileTile(
-              imageUrl: Assets.qrcode,
-              title: "QR Code",
-              onTap: () {
-                Navigator.push(context, QrCodePage.route());
-              },
-            ),
-            ProfileTile(
-              imageUrl: Assets.information,
-              title: "Lucky Draw Information",
-              onTap: () {
-                Navigator.push(context, LuckDrawInformationPage.route());
-              },
-            ),
-            ProfileTile(
-              imageUrl: Assets.help2,
-              title: "Help",
-              onTap: () {
-                Navigator.push(context, HelpsPage.route());
-              },
-            ),
-            ProfileTile(
-                imageUrl: Assets.logout,
-                title: "Logout",
-                isShowDivider: false,
-                onTap: () async {
-                  if (await showLogoutAccountDialog(context)) {
-                    if (await showSuccessfulLogoutDialog(context)) {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+                ProfileTile(
+                  imageUrl: Assets.profileIcon,
+                  title: "Profile Details",
+                  onTap: () {
+                    Navigator.push(
+                        context, ProfileDetailsPage.route(data!, imageUrl!));
+                  },
+                ),
+                ProfileTile(
+                  imageUrl: Assets.changePassword2,
+                  title: "Change Password",
+                  onTap: () async {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChangePasswordPage()));
+                  },
+                ),
+                ProfileTile(
+                  imageUrl: Assets.qrcode,
+                  title: "QR Code",
+                  onTap: () {
+                    Navigator.push(context, QrCodePage.route());
+                  },
+                ),
+                ProfileTile(
+                  imageUrl: Assets.information,
+                  title: "Lucky Draw Information",
+                  onTap: () {
+                    Navigator.push(context, LuckDrawInformationPage.route());
+                  },
+                ),
+                ProfileTile(
+                  imageUrl: Assets.help2,
+                  title: "Help",
+                  onTap: () {
+                    Navigator.push(context, HelpsPage.route());
+                  },
+                ),
+                ProfileTile(
+                    imageUrl: Assets.logout,
+                    title: "Logout",
+                    isShowDivider: false,
+                    onTap: () async {
+                      if (await showLogoutAccountDialog(context)) {
+                        if (await showSuccessfulLogoutDialog(context)) {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
 
-                      prefs.clear();
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                          (route) => false);
-                    }
-                  }
-                }),
-          ],
-        ));
+                          prefs.clear();
+                          // ignore: use_build_context_synchronously
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginPage()),
+                              (route) => false);
+                        }
+                      }
+                    }),
+              ],
+            )
+          : ProfileTile(
+              imageUrl: Assets.logout,
+              title: "Log in",
+              isShowDivider: false,
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+
+                prefs.clear();
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    (route) => false);
+              }),
+    );
   }
 }
