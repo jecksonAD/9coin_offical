@@ -1,8 +1,8 @@
 {
   "project_info": {
-    "project_number": "653999955179",
-    "project_id": "coin-fdd2e",
-    "storage_bucket": "coin-fdd2e.appspot.com"
+    "project_number": "239577582640",
+    "project_id": "coin-3cb50",
+    "storage_bucket": "coin-3cb50.appspot.com"
   },
   "client": [
     {
@@ -45,12 +45,12 @@
       "client_info": {
         "mobilesdk_app_id": "1:653999955179:android:67c825a8006640087372ae",
         "android_client_info": {
-          "package_name": "com.example.ninecoin"
+          "package_name": "com.evoweb.ninecom"
         }
       },
       "oauth_client": [
         {
-          "client_id": "653999955179-itinkq6uj5rmfbrldk11jcfuefm3pu47.apps.googleusercontent.com",
+          "client_id": "239577582640-tpcbffclc51n9gm8dkicst0pspf0m2hj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -86,20 +86,20 @@
       },
       "oauth_client": [
         {
-          "client_id": "653999955179-itinkq6uj5rmfbrldk11jcfuefm3pu47.apps.googleusercontent.com",
+          "client_id": "239577582640-tpcbffclc51n9gm8dkicst0pspf0m2hj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDbi_RU3OlcZZ-d0tWz5_ErKP9IL535ddA"
+          "current_key": "AIzaSyA15qOXw7Z1C85-16UXZX1yYijyUuENt9Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "653999955179-itinkq6uj5rmfbrldk11jcfuefm3pu47.apps.googleusercontent.com",
+              "client_id": "239577582640-tpcbffclc51n9gm8dkicst0pspf0m2hj.apps.googleusercontent.com",
               "client_type": 3
             },
             {
