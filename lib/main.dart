@@ -17,7 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-    name: "ninecoin",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 

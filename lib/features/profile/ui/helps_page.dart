@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
+import 'package:ninecoin/features/point/services/url_launcher.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HelpsPage extends StatelessWidget {
   static Route<HelpsPage> route() {
@@ -48,7 +50,13 @@ class HelpsPage extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  int phone = 0193190602;
+
+                  final url = 'https://wa.me/$phone';
+                  await launchUrlString(url,
+                      mode: LaunchMode.externalApplication);
+                },
                 style: ElevatedButton.styleFrom(
                   primary: CoinColors.green,
                 ),

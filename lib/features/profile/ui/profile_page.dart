@@ -46,7 +46,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
     getUserId().then((value) {
       if (value != 0) {
-        login = true;
+        setState(() {
+          login = true;
+        });
       }
     });
     super.initState();
