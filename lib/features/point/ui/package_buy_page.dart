@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/api/tnc.dart';
 import 'package:ninecoin/features/point/api/pointpackage.dart';
-import 'package:ninecoin/features/point/ui/package_payment_page.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -109,28 +108,38 @@ class _PackageBuyPageState extends State<PackageBuyPage> {
                       future: gettnc.GetTncPointPackage(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Column(
-                            children: <Widget>[
-                              for (int i = 0;
-                                  i < snapshot.data![0]['servicecount'];
-                                  i++)
-                                Column(
-                                  children: [
-                                    const SizedBox(height: 6),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                          snapshot.data![0]
-                                              ['service_' + i.toString()],
-                                          style: CoinTextStyle.title3.copyWith(
-                                            letterSpacing: 0.5,
-                                          )),
-                                    ),
-                                    const SizedBox(height: 6.0),
-                                  ],
-                                )
-                            ],
-                          );
+                          return Expanded(
+                              child: SingleChildScrollView(
+                                  child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 9),
+                                      child: Column(
+                                        children: <Widget>[
+                                          for (int i = 0;
+                                              i <
+                                                  snapshot.data![0]
+                                                      ['servicecount'];
+                                              i++)
+                                            Column(
+                                              children: [
+                                                const SizedBox(height: 6),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                      snapshot.data![0]
+                                                          ['service_$i'],
+                                                      style: CoinTextStyle
+                                                          .title3
+                                                          .copyWith(
+                                                        letterSpacing: 0.5,
+                                                      )),
+                                                ),
+                                                const SizedBox(height: 6.0),
+                                              ],
+                                            )
+                                        ],
+                                      ))));
                         } else {
                           return Center(
                             child: CircularProgressIndicator(),
