@@ -1,14 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/typography/text_styles.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../services/purchase_history.dart';
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
+import '../../../config/config.dart';
 
 class PurchaseTile extends StatefulWidget {
   final Function()? onTap;
@@ -57,10 +55,9 @@ class _PurchaseTileState extends State<PurchaseTile> {
                     print('test');
                     String url = '';
                     if (widget.type == "coupon") {
-                      url =
-                          'https://9coin.s3.ap-southeast-1.amazonaws.com/Coupon/' +
-                              widget.id +
-                              '.pdf';
+                      url = Api.fileDownloadUrl;
+                      url = url.replaceAll(":type", "coupon");
+                      url = url.replaceAll(":id", widget.id);
                     }
                     if (widget.type == "transaction") {
                       url =
@@ -69,16 +66,20 @@ class _PurchaseTileState extends State<PurchaseTile> {
                               '.pdf';
                     }
                     if (widget.type == "product") {
-                      url =
-                          'https://9coin.s3.ap-southeast-1.amazonaws.com/Product/' +
-                              widget.id +
-                              '.pdf';
+                      url = Api.fileDownloadUrl;
+                      url = url.replaceAll(":type", "product");
+                      url = url.replaceAll(":id", widget.id);
                     }
                     if (widget.type == "topup") {
-                      url =
-                          'https://9coin.s3.ap-southeast-1.amazonaws.com/TopUp/' +
-                              widget.id +
-                              '.pdf';
+                      url = Api.fileDownloadUrl;
+                      url = url.replaceAll(":type", "topup");
+                      url = url.replaceAll(":id", widget.id);
+                    }
+
+                    if (widget.type == "returnpointshistory") {
+                      url = Api.fileDownloadUrl;
+                      url = url.replaceAll(":type", "returnpointshistory");
+                      url = url.replaceAll(":id", widget.id);
                     }
 
                     if (!await launchUrl(

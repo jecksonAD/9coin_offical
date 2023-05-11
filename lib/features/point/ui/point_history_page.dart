@@ -7,6 +7,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'Product_history_page.dart';
 import 'coupon_history_page.dart';
+import 'return_points_history_page.dart';
 
 class PointHistoryPage extends StatefulWidget {
   static route() {
@@ -45,7 +46,7 @@ class _PointHistoryPageState extends State<PointHistoryPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
 
@@ -78,6 +79,7 @@ class _PointHistoryPageState extends State<PointHistoryPage>
                       Tab(text: 'Purchase History'),
                       Tab(text: 'Coupon History'),
                       Tab(text: 'Product History'),
+                      Tab(text: 'Return Points History'),
                     ],
                     controller: _tabController,
                     indicatorSize: TabBarIndicatorSize.tab,
@@ -92,6 +94,7 @@ class _PointHistoryPageState extends State<PointHistoryPage>
                       PurchaseHistoryPage(),
                       CouponHistoryPage(),
                       ProductPurchaseHistoryPage(),
+                      ReturnPointsHistoryPage(),
                     ],
                   ),
                 ),
