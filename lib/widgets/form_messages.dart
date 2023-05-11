@@ -1,8 +1,7 @@
-
 // Email and Phone Number matching patterns
-final RegExp emailValidatorRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z]+\.[a-zA-Z]+");
-RegExp phoneNumberValidatorRegExp =  RegExp(r"(^(?:[+0]9)?[0-9]{11}$)");
-
+final RegExp emailValidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$");
+RegExp phoneNumberValidatorRegExp = RegExp(r"(^(?:[+0]9)?[0-9]{11}$)");
 
 // Error messages
 const String kEmailNullError = "Please Enter your email";

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../config/config.dart';
-import 'package:dio/dio.dart';
 
 Future<int?> getUserId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -85,6 +85,22 @@ class transaction {
 
   Future<List> gettopuptransactionlist(String id) async {
     String url = Api.topuptransactionlist + "/" + id;
+
+    try {
+      var response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        return Future.error("Server Error");
+      }
+    } catch (e) {
+      return Future.error(e);
+    }
+  }
+
+  Future<List> getReturnPointsHistory(String id) async {
+    String url = "${Api.returnPointsHistory}/$id";
 
     try {
       var response = await http.get(Uri.parse(url));
