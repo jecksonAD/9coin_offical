@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ninecoin/colors/colors.dart';
-import 'package:ninecoin/features/home/components/my_bottom_navigation_bar.dart';
 import 'package:ninecoin/features/point/ui/purchase_history_page.dart';
 import 'package:ninecoin/features/point/ui/transaction_history_page.dart';
 import 'package:ninecoin/typography/text_styles.dart';
@@ -76,7 +75,7 @@ class _PointHistoryPageState extends State<PointHistoryPage>
                     labelStyle: CoinTextStyle.orangeTitle3,
                     tabs: const [
                       Tab(text: 'Top Up Transaction'),
-                      Tab(text: 'Pruchase History'),
+                      Tab(text: 'Purchase History'),
                       Tab(text: 'Coupon History'),
                       Tab(text: 'Product History'),
                     ],
