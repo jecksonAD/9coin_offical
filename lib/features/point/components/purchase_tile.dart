@@ -60,10 +60,9 @@ class _PurchaseTileState extends State<PurchaseTile> {
                       url = url.replaceAll(":id", widget.id);
                     }
                     if (widget.type == "transaction") {
-                      url =
-                          'https://9coin.s3.ap-southeast-1.amazonaws.com/Invoices/' +
-                              widget.id +
-                              '.pdf';
+                      url = Api.fileDownloadUrl;
+                      url = url.replaceAll(":type", "transaction");
+                      url = url.replaceAll(":id", widget.id);
                     }
                     if (widget.type == "product") {
                       url = Api.fileDownloadUrl;
