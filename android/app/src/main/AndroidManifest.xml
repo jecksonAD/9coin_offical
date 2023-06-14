@@ -41,7 +41,7 @@
 
 
 
-   
+        android:usesCleartextTraffic="true"
         android:label="9Com"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">

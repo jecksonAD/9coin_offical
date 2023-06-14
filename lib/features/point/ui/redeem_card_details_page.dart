@@ -49,20 +49,16 @@ class _RedeemCardDetailsPageState extends State<RedeemCardDetailsPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   children: [
-                    Expanded(
-                        child: Image.network(
-                            snapshot.data![0]['image_url'].toString())),
+                    Image.network(snapshot.data![0]['image_url'].toString()),
                     const SizedBox(height: 12.0),
                     Text(snapshot.data![0]['name'].toString(),
                         style: CoinTextStyle.orangeTitle2),
                     const SizedBox(height: 8.0),
-                    Text("Email : " + snapshot.data![0]['email'].toString(),
+                    Text("Email : ${snapshot.data![0]['email']}",
                         style: CoinTextStyle.title3),
-                    Text(
-                        "Contact Number : " +
-                            snapshot.data![0]['phonenumber'].toString(),
+                    Text("Contact Number : ${snapshot.data![0]['phonenumber']}",
                         style: CoinTextStyle.title3),
-                    Text("Address : " + snapshot.data![0]['address'].toString(),
+                    Text("Address : ${snapshot.data![0]['address']}",
                         style: CoinTextStyle.title3),
                     const SizedBox(height: 12.0),
                     const Divider(),
@@ -111,9 +107,7 @@ class _RedeemCardDetailsPageState extends State<RedeemCardDetailsPage> {
                               const SizedBox(height: 6),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(
-                                    snapshot.data![0]
-                                        ['service_' + i.toString()],
+                                child: Text(snapshot.data![0]['service_$i'],
                                     style: CoinTextStyle.title3.copyWith(
                                       letterSpacing: 0.5,
                                     )),
@@ -144,7 +138,7 @@ class _RedeemCardDetailsPageState extends State<RedeemCardDetailsPage> {
                 ),
               );
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),

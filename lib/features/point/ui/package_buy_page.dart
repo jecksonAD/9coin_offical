@@ -4,8 +4,9 @@ import 'package:ninecoin/features/api/tnc.dart';
 import 'package:ninecoin/features/point/api/pointpackage.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../../config/config.dart';
+import 'in_app_webview_page.dart';
 
 class PackageBuyPage extends StatefulWidget {
   static route(
@@ -156,13 +157,24 @@ class _PackageBuyPageState extends State<PackageBuyPage> {
                     Userid.toString() +
                     "/" +
                     widget.pointpackage.data[widget.index].id.toString();
-                //   const url = 'https://www.google.com';
-                if (!await launchUrl(
-                  Uri.parse(url),
-                  mode: LaunchMode.externalApplication,
-                )) {}
-                throw 'Could not launch $url';
+                try {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InAppWebViewPage(url: url),
+                    ),
+                  );
+                } catch (e) {
+                  throw 'Could not launch $url';
+                }
               },
+              //   const url = 'https://www.google.com';
+              //   if (!await launchUrl(
+              //     Uri.parse(url),
+              //     mode: LaunchMode.externalApplication,
+              //   )) {}
+              //   throw 'Could not launch $url';
+              // },
               child: const Text("Pay"),
             ),
           ],

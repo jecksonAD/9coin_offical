@@ -28,12 +28,14 @@ void setUserInfo(GetUserData user) async {
 
 Future<Map<dynamic, dynamic>?> getLocalUser() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var user = json.decode(prefs.getString("data")!);
-  if (user.toString().isEmpty) {
-    return null;
-  } else {
-    Data data = Data.fromJson(user);
-    return data.toJson();
+  if (prefs.getString("data") != null) {
+    var user = json.decode(prefs.getString("data")!);
+    if (user.toString().isEmpty) {
+      return null;
+    } else {
+      Data data = Data.fromJson(user);
+      return data.toJson();
+    }
   }
 }
 
