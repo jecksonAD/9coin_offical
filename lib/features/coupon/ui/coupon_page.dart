@@ -61,7 +61,7 @@ class _CouponPageState extends State<CouponPage>
             controller: _tabController,
             children: [
               ActiveDiscountCopoun(),
-              PurchasedDiscountCopoun(),
+              const PurchasedDiscountCopoun(),
             ],
           ),
         ),
@@ -146,7 +146,7 @@ class PurchasedDiscountCopoun extends StatefulWidget {
     return MaterialPageRoute(builder: (context) => PurchasedDiscountCopoun());
   }
 
-  PurchasedDiscountCopoun({Key? key}) : super(key: key);
+  const PurchasedDiscountCopoun({Key? key}) : super(key: key);
 
   @override
   State<PurchasedDiscountCopoun> createState() =>
@@ -154,16 +154,17 @@ class PurchasedDiscountCopoun extends StatefulWidget {
 }
 
 class _PurchasedDiscountCopounState extends State<PurchasedDiscountCopoun> {
-  late String Userid;
+  late String Userid = "";
   late String purchasecondition = "";
   Coupon getdata = new Coupon();
   @override
   void initState() {
     super.initState();
     getdata.getUserId().then((value) {
+      //print('test' + value.toString());
       setState(() {
         Userid = value.toString();
-        print(Userid);
+        // print(Userid);
       });
     });
   }
@@ -180,7 +181,6 @@ class _PurchasedDiscountCopounState extends State<PurchasedDiscountCopoun> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-                physics: FixedExtentScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemCount: snapshot.data?.length,
                 itemBuilder: (context, index) {
