@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   badges: ^2.0.3
+  flutter_inappwebview: ^5.7.2+3
   barcode_widget: ^2.0.1
   cached_network_image: ^3.2.2
   cupertino_icons: ^1.0.2
@@ -44,6 +45,7 @@ dependencies:
   json_annotation: ^4.7.0
   full_screen_image: ^2.0.0
   http_parser: ^4.0.2
+  in_app_webview: ^0.0.9
 
 
 

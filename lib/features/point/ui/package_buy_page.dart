@@ -4,7 +4,7 @@ import 'package:ninecoin/features/api/tnc.dart';
 import 'package:ninecoin/features/point/api/pointpackage.dart';
 import 'package:ninecoin/typography/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'in_app_webview_page.dart';
 import '../../../config/config.dart';
 
 import 'package:in_app_webview/in_app_webview.dart';
@@ -158,24 +158,24 @@ class _PackageBuyPageState extends State<PackageBuyPage> {
                     Userid.toString() +
                     "/" +
                     widget.pointpackage.data[widget.index].id.toString();
-                //   try {
-                //     await Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //         builder: (context) => InAppWebViewPage(url: url),
-                //       ),
-                //     );
-                //   } catch (e) {
-                //     throw 'Could not launch $url';
-                //   }
-                // },
-                const urls = 'https://www.google.com';
-                if (!await launchUrl(
-                  Uri.parse(url),
-                  mode: LaunchMode.inAppWebView,
-                )) {}
-                throw 'Could not launch $url';
+                try {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InAppWebViewPage(url: url),
+                    ),
+                  );
+                } catch (e) {
+                  throw 'Could not launch $url';
+                }
               },
+              //  const urls = 'https://www.google.com';
+              //   if (!await launchUrl(
+              //     Uri.parse(url),
+              //     mode: LaunchMode.inAppWebView,
+              //   )) {}
+              //   throw 'Could not launch $url';
+              // },
               child: const Text("Pay"),
             ),
           ],
