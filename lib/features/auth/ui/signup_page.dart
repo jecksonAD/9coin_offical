@@ -48,12 +48,7 @@ class _SignupPageState extends State<SignupPage> {
 
   void initState() {
     FirebaseMessaging.onMessage.listen((message) {
-      print('Firebase');
-      if (message.notification != null) {
-        print(message.notification!.title);
-        print(message.notification!.body);
-        print("message.data11 ${message.data}");
-      }
+      if (message.notification != null) {}
     });
 
     super.initState();
@@ -63,7 +58,6 @@ class _SignupPageState extends State<SignupPage> {
     final FirebaseMessaging _fcm = FirebaseMessaging.instance;
     final token = await _fcm.getToken();
     deviceTokenToSendPushNotification = token.toString();
-    print("Token Value $deviceTokenToSendPushNotification");
   }
 
   @override
@@ -154,7 +148,7 @@ class _SignupPageState extends State<SignupPage> {
                   },
                   validator: (val) {
                     if (val!.isEmpty) {
-                      return "Address required";
+                      return null;
                     } else {
                       return null;
                     }
@@ -170,7 +164,7 @@ class _SignupPageState extends State<SignupPage> {
                         decoration: const InputDecoration(hintText: "City"),
                         validator: (val) {
                           if (val!.isEmpty) {
-                            return "City required";
+                            return null;
                           } else {
                             return null;
                           }
@@ -194,7 +188,7 @@ class _SignupPageState extends State<SignupPage> {
                             const InputDecoration(hintText: "Postal Code"),
                         validator: (val) {
                           if (val!.isEmpty) {
-                            return "Postal Code required";
+                            return null;
                           } else {
                             return null;
                           }
@@ -209,7 +203,7 @@ class _SignupPageState extends State<SignupPage> {
                         decoration: const InputDecoration(hintText: "Country"),
                         validator: (val) {
                           if (val!.isEmpty) {
-                            return "Country required";
+                            return null;
                           } else {
                             return null;
                           }

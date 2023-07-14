@@ -48,7 +48,6 @@ class _HomePageState extends State<HomePage> {
     final FirebaseMessaging _fcm = FirebaseMessaging.instance;
     final token = await _fcm.getToken();
     deviceTokenToSendPushNotification = token.toString();
-    print("Token Value $deviceTokenToSendPushNotification");
   }
 
   int currentPage = 0;

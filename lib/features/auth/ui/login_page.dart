@@ -48,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
     final FirebaseMessaging _fcm = FirebaseMessaging.instance;
     final token = await _fcm.getToken();
     deviceTokenToSendPushNotification = token.toString();
-    print("Token Value $deviceTokenToSendPushNotification");
   }
 
   @override
