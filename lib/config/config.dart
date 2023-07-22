@@ -56,6 +56,7 @@ class Api {
   static const _uploadimage = "/upload_pic";
   static const _getuserimage = "/profile_pic";
   static const _fileDownloadPath = "/download-file/:type/:id";
+  static const _accountDelete = "/deleteAccount";
 
   static String baseUrl = "$_base$_api";
   static String login = "$_base$_api$_login";
@@ -114,4 +115,5 @@ class Api {
   static String getuserimage = "$_base$_api$_getuserimage";
   static String returnPointsHistory = "$_base$_api$_returnPointsHistory";
   static String fileDownloadUrl = "$_base$_api$_fileDownloadPath";
+  static String accountDelete = "$_base$_api$_accountDelete";
 }

@@ -1,5 +1,6 @@
 abstract class Assets {
   static String appLogo = "assets/logos/9-com-2.png";
+  static String DeleteAccount = "assets/icons/Artboard1.png";
   static String profileIcon = "assets/icons/profile.png";
   static String slider = "assets/pics/slider.jpg";
   static String salon = "assets/icons/salon.png";

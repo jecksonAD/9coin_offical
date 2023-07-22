@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Map<dynamic, dynamic>? data;
   String? imageUrl;
   bool login = false;
+  var userid;
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
     getUserId().then((value) {
       if (value != 0) {
         setState(() {
+          userid = value;
           login = true;
         });
       }
@@ -171,6 +173,27 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(context, HelpsPage.route());
                   },
                 ),
+                ProfileTile(
+                    imageUrl: Assets.DeleteAccount,
+                    title: "Delete Account",
+                    onTap: () async {
+                      if (await showDeleteAccountDialog(context)) {
+                        //  accountdeletion(userid);
+                        if (await accountdeletion(userid) == 202) {
+                          if (await showSuccessfulDeleteDialog(context)) {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            prefs.clear();
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginPage()),
+                                (route) => false);
+                          }
+                        }
+                      }
+                    }),
                 ProfileTile(
                     imageUrl: Assets.logout,
                     title: "Logout",

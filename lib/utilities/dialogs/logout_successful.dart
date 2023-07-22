@@ -16,3 +16,17 @@ Future<bool> showSuccessfulLogoutDialog(BuildContext context) {
     (value) => value ?? false,
   );
 }
+
+Future<bool> showSuccessfulDeleteDialog(BuildContext context) {
+  return showGenericDialog<bool>(
+    context: context,
+    imageUrl: Assets.updated,
+    title: "Account Deleted",
+    content: "Your Account have been Deleted and it cannot be reverse.",
+    optionsBuilder: () => {
+      "Back": true,
+    },
+  ).then(
+    (value) => value ?? false,
+  );
+}
