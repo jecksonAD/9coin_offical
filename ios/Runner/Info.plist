@@ -27,7 +27,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>9Com will be access your phone directory to get image</string>
+	<string>We need access to your photo library to enable you to upload and share your favorite moments with friends and family through our app. Your photos will only be accessed within the app and will not be shared with any third parties. We value your privacy and ensure that your photos are kept secure and protected at all times.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
