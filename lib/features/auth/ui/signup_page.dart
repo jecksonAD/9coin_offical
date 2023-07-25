@@ -129,7 +129,7 @@ class _SignupPageState extends State<SignupPage> {
                   decoration: const InputDecoration(hintText: "Contact Number"),
                   validator: (val) {
                     if (val!.isEmpty) {
-                      return "Contact Number required";
+                      return null;
                     } else {
                       return null;
                     }
