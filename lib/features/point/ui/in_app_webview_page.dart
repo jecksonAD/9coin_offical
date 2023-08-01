@@ -18,7 +18,7 @@ class _InAppWebViewPageState extends State<InAppWebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('In-App Browser'),
+        title: Text('9Com'),
       ),
       body: Stack(
         children: [

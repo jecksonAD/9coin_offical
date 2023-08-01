@@ -33,7 +33,7 @@ class _BuyPointPackagePageState extends State<BuyPointPackagePage> {
       setState(() {
         pointpackageresponses = value;
         loading = false;
-        print("init");
+    
       });
       // print(pointpackageresponses);
     });

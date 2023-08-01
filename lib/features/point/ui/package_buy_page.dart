@@ -39,7 +39,6 @@ class _PackageBuyPageState extends State<PackageBuyPage> {
     getdata.getUserId().then((value) {
       setState(() {
         Userid = value.toString();
-        print(Userid);
       });
     });
   }
