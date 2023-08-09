@@ -34,7 +34,6 @@ class _CouponPageState extends State<CouponPage>
     getdata.getUserId().then((value) {
       setState(() {
         Userid = value.toString();
-        print(Userid);
       });
     });
   }

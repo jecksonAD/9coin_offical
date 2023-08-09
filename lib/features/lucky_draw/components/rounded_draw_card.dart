@@ -55,7 +55,7 @@ class RoundedDrawCard extends StatelessWidget {
                         }, errorBuilder: (BuildContext context,
                             Object exception, StackTrace? stackTrace) {
                           return Center(child: CircularProgressIndicator());
-                        }, fit: BoxFit.contain),
+                        }, fit: BoxFit.fill),
                       ),
                     ),
                   ),

@@ -3,13 +3,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:flutter/material.dart';
-
+import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
 import 'package:ninecoin/features/auth/services/auth.dart';
 import 'package:ninecoin/features/auth/ui/signup_page.dart';
@@ -22,11 +21,9 @@ import 'package:ninecoin/typography/text_styles.dart';
 import 'package:ninecoin/utilities/dialogs/update_details_dialog.dart';
 import 'package:ninecoin/utilities/dialogs/updated_successful_dialog.dart';
 import 'package:ninecoin/widgets/text_field_with_title.dart';
-
 import '../../../utilities/dialogs/error_dialoge.dart';
 import '../components/profile_circular_picture.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../services/get_image.dart';
 import '../services/upload_image.dart';
 import 'profile_details_page.dart';
@@ -66,153 +63,133 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: CoinColors.fullBlack,
-      child: SafeArea(
-        child: ModalProgressHUD(
-          inAsyncCall: showSpinner,
-          child: Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text("Edit Profile"),
-            ),
-            body: SingleChildScrollView(
-              child: FutureBuilder(
-                future: localUser(),
-                builder: (_, AsyncSnapshot<Map?> snapshot) {
-                  if (snapshot.hasData) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Container(
-                          height: 90,
-                          width: 90,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: CoinColors.black12,
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          alignment: Alignment.center,
-                          child: _image != null
-                              ? Image.file(
-                                  _image!.absolute,
-                                  fit: BoxFit.contain,
-                                )
-                              : ProfileCircularPicture(
-                                  imageUrl: 'null',
-                                  onTap: () => imagePickerFromBottom(context),
-                                ),
-                        ),
-                        TextFieldWithTitle(
-                          title: "Name",
-                          hintText: "",
-                          value: snapshot.data!['name'],
-                          inputbar: username,
-                        ),
-                        TextFieldWithTitle(
-                          title: "Contact Number",
-                          hintText: "",
-                          value: snapshot.data!['phonenumber'],
-                          inputbar: contactnumber,
-                        ),
-                        _InputGender(
-                          gender: snapshot.data!['gender'],
-                        ),
-                        TextFieldWithTitle(
-                          title: "Address",
-                          hintText: "",
-                          value: snapshot.data!['address'],
-                          inputbar: address,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 10),
-                              _InputCountry(),
-                            ],
+    return SafeArea(
+      child: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text("Edit Profile"),
+          ),
+          body: SingleChildScrollView(
+            child: FutureBuilder(
+              future: localUser(),
+              builder: (_, AsyncSnapshot<Map?> snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      Container(
+                        height: 20,
+                      ),
+                      ClipOval(
+                        child: GestureDetector(
+                          onTap: () {
+                            imagePickerFromBottom(context);
+                          },
+                          child: Container(
+                            height: 90,
+                            width: 90,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: CoinColors.black,
+                                image: _image != null
+                                    ? DecorationImage(
+                                        image: FileImage(
+                                          _image!,
+                                        ),
+                                        fit: BoxFit.fill)
+                                    : null),
+                            child: _image == null
+                                ? ProfileCircularPicture(
+                                    imageUrl: 'null',
+                                    onTap: () => imagePickerFromBottom(context),
+                                  )
+                                : null,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                          child: ElevatedButton(
-                              onPressed: () async {
-                                if (_image != null) {
-                                  Map<dynamic, dynamic>? data;
-                                  ImageGet? image;
-                                  String? imageUrl;
-                                  print(_image);
-                                  uploadImage(_image!.path).then((value) {
-                                    setState(() async {
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      UserEdit user = UserEdit(
-                                          name: username.text,
-                                          phonenumber: contactnumber.text,
-                                          address: address.text,
-                                          gender: prefs.getString('gender'));
+                      ),
+                      TextFieldWithTitle(
+                        title: "Name",
+                        hintText: "",
+                        value: snapshot.data!['name'],
+                        inputbar: username,
+                      ),
+                      TextFieldWithTitle(
+                        title: "Contact Number",
+                        hintText: "",
+                        value: snapshot.data!['phonenumber'],
+                        inputbar: contactnumber,
+                      ),
+                      _InputGender(
+                        gender: snapshot.data!['gender'],
+                      ),
+                      TextFieldWithTitle(
+                        title: "Address",
+                        hintText: "",
+                        value: snapshot.data!['address'],
+                        inputbar: address,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            _InputCountry(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 380,
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              if (_image != null) {
+                                Map<dynamic, dynamic>? data;
+                                ImageGet? image;
+                                String? imageUrl;
+                                uploadImage(_image!.path).then((value) {
+                                  setState(() async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    UserEdit user = UserEdit(
+                                        name: username.text,
+                                        phonenumber: contactnumber.text,
+                                        address: address.text,
+                                        gender: prefs.getString('gender'));
 
-                                      userid = snapshot.data!['id'].toString();
+                                    userid = snapshot.data!['id'].toString();
 
-                                      if (await showUpdateDetailsDialog(
-                                          context)) {
-                                        edituser(
-                                                registerUser: user,
-                                                userid: userid)
-                                            .then((value) async {
-                                          await showUpdatedSuccessfulDialog(
-                                                  context, value)
-                                              .then((value) {
-                                            localUser().then((value) {
-                                              data = value;
-                                              getUserImage().then((value) {
-                                                image = value;
-                                                imageUrl = image!.profilePic;
-                                                print('wahts');
-                                                Navigator.push(
-                                                    context,
-                                                    ProfileDetailsPage.route(
-                                                        data, imageUrl));
-                                              });
+                                    if (await showUpdateDetailsDialog(
+                                        context)) {
+                                      edituser(
+                                              registerUser: user,
+                                              userid: userid)
+                                          .then((value) async {
+                                        await showUpdatedSuccessfulDialog(
+                                                context, value)
+                                            .then((value) {
+                                          localUser().then((value) {
+                                            data = value;
+                                            getUserImage().then((value) {
+                                              image = value;
+                                              imageUrl = image!.profilePic;
+
+                                              Navigator.push(
+                                                  context,
+                                                  ProfileDetailsPage.route(
+                                                      data, imageUrl));
                                             });
                                           });
-                                        }).catchError((err) async {
-                                          await showErrorDialog(
-                                              context, "Error", "$err");
                                         });
-                                      }
-                                    });
-                                  });
-                                } else {
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  UserEdit user = UserEdit(
-                                      name: username.text,
-                                      phonenumber: contactnumber.text,
-                                      address: address.text,
-                                      gender: prefs.getString('gender'));
-
-                                  userid = snapshot.data!['id'].toString();
-
-                                  if (await showUpdateDetailsDialog(context)) {
-                                    edituser(registerUser: user, userid: userid)
-                                        .then((value) async {
-                                      await showUpdatedSuccessfulDialog(
-                                              context, value)
-                                          .then((value) {
-                                        /*   Navigator.push(context,
-                                            ProfileDetailsPage.route());*/
+                                      }).catchError((err) async {
+                                        await showErrorDialog(
+                                            context, "Error", "$err");
                                       });
-                                    }).catchError((err) async {
-                                      await showErrorDialog(
-                                          context, "Error", "$err");
-                                    });
-
-                                    //await showUpdatedSuccessfulDialog(context);
-                                  }
-                                }
-
-                                /*  SharedPreferences prefs =
+                                    }
+                                  });
+                                });
+                              } else {
+                                SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 UserEdit user = UserEdit(
                                     name: username.text,
@@ -220,43 +197,32 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     address: address.text,
                                     gender: prefs.getString('gender'));
 
-                                //Return String
                                 userid = snapshot.data!['id'].toString();
 
-                                //print(userid.toString());
-*/
-                                /*   if (await showUpdateDetailsDialog(context)) {
+                                if (await showUpdateDetailsDialog(context)) {
                                   edituser(registerUser: user, userid: userid)
                                       .then((value) async {
                                     await showUpdatedSuccessfulDialog(
                                             context, value)
                                         .then((value) {
-                                      Navigator.push(
-                                          context, ProfileDetailsPage.route());
+                                      /*   Navigator.push(context,
+                                          ProfileDetailsPage.route());*/
                                     });
                                   }).catchError((err) async {
                                     await showErrorDialog(
                                         context, "Error", "$err");
                                   });
-
-                                  //await showUpdatedSuccessfulDialog(context);
-                                }*/
-
-                                /*  uploadImage(_image!).then((value) {
-                                  setState(() {
-                                    showSpinner = false;
-                                  });
-                                });*/
-                              },
-                              child: const Text("Update")),
-                        )
-                      ],
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
+                                }
+                              }
+                            },
+                            child: const Text("Update")),
+                      )
+                    ],
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
             ),
           ),
         ),

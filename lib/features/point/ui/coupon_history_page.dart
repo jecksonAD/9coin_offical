@@ -46,7 +46,8 @@ class _CouponPurchaseHistoryPageState extends State<CouponHistoryPage> {
                           date: snapshot.data![index]['date_'],
                           title: snapshot.data![index]['name'],
                           subtitle: "",
-                          point: snapshot.data![index]['point'].toString()),
+                          point: snapshot.data![index]['promotionpoint']
+                              .toString()),
                     ],
                   );
                 });

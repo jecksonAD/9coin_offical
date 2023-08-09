@@ -24,7 +24,6 @@ class _DrawItemsListState extends State<DrawItemsList> {
     getdata.getUserId().then((value) {
       setState(() {
         Userid = value.toString();
-        print(Userid);
       });
     });
     //futuredata = getString("220001");

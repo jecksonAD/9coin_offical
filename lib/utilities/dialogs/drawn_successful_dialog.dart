@@ -8,7 +8,9 @@ Future<bool> showDrawnSuccessfulDialog(BuildContext context, String value) {
   return showGenericDialog<bool>(
     context: context,
     imageUrl: Assets.updated,
-    title: "Drawn Successful!",
+    title: value == "No Enough Balance"
+        ? "Drawn Unsuccessful!"
+        : "Drawn Successful!",
     content: value,
     optionsBuilder: () => {
       "Back": true,

@@ -8,7 +8,9 @@ Future<bool> showSuccessfulCouponDialog(
   return showGenericDialog<bool>(
     context: context,
     imageUrl: Assets.updated,
-    title: "Purchase Successful!",
+    title: purchasecondition == "No Enough Balance"
+        ? "Purchase Unsuccessful!"
+        : "Purchase Successful!",
     content: purchasecondition,
     optionsBuilder: () => {
       "Back": false,

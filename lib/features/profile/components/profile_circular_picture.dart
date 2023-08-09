@@ -4,12 +4,9 @@ import 'package:ninecoin/assets/assets.dart';
 import 'package:ninecoin/colors/colors.dart';
 
 class ProfileCircularPicture extends StatelessWidget {
-  const   ProfileCircularPicture({
-    Key? key,
-    this.onTap,
-    this.imageUrl,
-    this.isShowSelectImage = false
-  }) : super(key: key);
+  const ProfileCircularPicture(
+      {Key? key, this.onTap, this.imageUrl, this.isShowSelectImage = false})
+      : super(key: key);
 
   final Function()? onTap;
   final String? imageUrl;
@@ -37,7 +34,7 @@ class ProfileCircularPicture extends StatelessWidget {
                         color: CoinColors.black,
                         image: DecorationImage(
                           opacity: 0.2,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           image: AssetImage(
                             imageUrl ?? Assets.profile,
                           ),
@@ -47,7 +44,7 @@ class ProfileCircularPicture extends StatelessWidget {
                           color: CoinColors.white, size: 26),
                     )
                   : Image.network(imageUrl ?? Assets.profile,
-                      fit: BoxFit.cover)),
+                      fit: BoxFit.fill)),
         ),
       ),
     );

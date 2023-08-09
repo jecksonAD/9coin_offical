@@ -237,7 +237,6 @@ class _ActiveCouponDetailsState extends State<ActiveCouponDetails> {
                               getdata.PurchaseCoupon(Userid,
                                       snapshot.data![0]['id'].toString())
                                   .then((value) async {
-                                print(value);
                                 if (await showSuccessfulCouponDialog(
                                     context, value)) {
                                   Navigator.push(
