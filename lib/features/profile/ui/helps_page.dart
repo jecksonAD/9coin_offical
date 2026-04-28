@@ -58,7 +58,7 @@ class HelpsPage extends StatelessWidget {
                       mode: LaunchMode.externalApplication);
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: CoinColors.green,
+                  backgroundColor: CoinColors.green,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30),
