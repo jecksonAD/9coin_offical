@@ -6,7 +6,6 @@ import 'package:ninecoin/l10n/app_localizations.dart';
 import 'package:ninecoin/features/home/ui/home_page.dart';
 
 import 'features/auth/ui/login_page.dart';
-import 'firebase_options.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print(message.data.toString());
@@ -16,11 +15,7 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Firebase.apps.isEmpty) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
+  await Firebase.initializeApp();
 
   /* await FlutterDownloader.initialize(
       debug:
