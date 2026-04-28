@@ -26,6 +26,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  bool _obscurePassword = true;
+
   void navigatePage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -42,20 +48,23 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
   String deviceTokenToSendPushNotification = "";
 
   Future<void> getDeviceTokenToSendNotification() async {
-    final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-    final token = await _fcm.getToken();
-    deviceTokenToSendPushNotification = token.toString();
+    //final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+ //   final token = await _fcm.getToken();
+   // deviceTokenToSendPushNotification = token.toString();
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController email = TextEditingController();
-    TextEditingController password = TextEditingController();
-    bool isLoading = false;
-    final _formKey = GlobalKey<FormState>();
 
     return Container(
       color: CoinColors.fullBlack,
@@ -103,27 +112,36 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 30),
                       TextFormField(
-                        obscureText: true,
+                        obscureText: _obscurePassword,
                         controller: password,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
                           fillColor: CoinColors.black12,
-                          contentPadding: EdgeInsets.all(10.0),
+                          contentPadding: const EdgeInsets.all(10.0),
                           hintText: "Password",
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: CoinColors.black54,
                               fontWeight: FontWeight.w600,
                               fontSize: 14.0),
-                          suffixIcon: Icon(
-                            Icons.lock,
-                            color: CoinColors.orange,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: CoinColors.orange,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(8.0)),
                           ),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
                         ),
@@ -140,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                                     email: email.text,
                                     password: password.text,
                                     device_id:
-                                        deviceTokenToSendPushNotification)
+                                        "")
                                 .then((value) async {
                               print('status' + value);
                               if (value == "Success") {
