@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -12,18 +10,19 @@ class WebViewScreen extends StatefulWidget {
 }
 
 class WebViewScreenState extends State<WebViewScreen> {
+  late final WebViewController _controller;
+
   @override
   void initState() {
     super.initState();
-    // Enable virtual display.
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(widget.url));
   }
 
   @override
   Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: widget.url,
-    );
+    return WebViewWidget(controller: _controller);
   }
 }
 
