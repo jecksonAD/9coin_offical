@@ -64,7 +64,7 @@ class HelpsPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 30),
                   child: Row(
                     children: [
-                      const Icon(FontAwesomeIcons.whatsapp),
+                      const FaIcon(FontAwesomeIcons.whatsapp),
                       const SizedBox(width: 5),
                       Text("Chat with us on WhatsApp",
                           style: CoinTextStyle.title4Bold),

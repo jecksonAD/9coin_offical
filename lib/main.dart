@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ninecoin/apptheme/apptheme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ninecoin/l10n/app_localizations.dart';
 import 'package:ninecoin/features/home/ui/home_page.dart';
 
 import 'features/auth/ui/login_page.dart';

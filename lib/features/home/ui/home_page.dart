@@ -1,5 +1,4 @@
 import 'package:badges/badges.dart' as badge;
-import 'package:badges/badges.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ninecoin/assets/assets.dart';
@@ -186,8 +185,10 @@ class _HomePageState extends State<HomePage> {
                             context, NotificationPage.route(notification!));
                       },
                       icon: badge.Badge(
-                        padding: const EdgeInsets.all(4),
-                        position: BadgePosition.topEnd(top: -2, end: -8),
+                        badgeStyle: badge.BadgeStyle(
+                          padding: const EdgeInsets.all(4),
+                        ),
+                        position: badge.BadgePosition.topEnd(top: -2, end: -8),
                         badgeContent: Text(notification!.data.length.toString(),
                             style: CoinTextStyle.title5),
                         child: const Icon(Icons.notifications,

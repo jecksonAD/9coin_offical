@@ -43,7 +43,7 @@ class _QrCodePageState extends State<QrCodePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            QrImage(
+            QrImageView(
               data: userId.toString(),
               version: QrVersions.auto,
               size: 300.0,

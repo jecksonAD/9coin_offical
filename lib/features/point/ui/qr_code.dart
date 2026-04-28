@@ -78,7 +78,7 @@ class _PointQrCodeState extends State<PointQrCode> {
               child:
                   SfBarcodeGenerator(value: userId.toString() + '1111111111'),
             ),*/
-            QrImage(
+            QrImageView(
               data: userId.toString(),
               version: QrVersions.auto,
               size: 300.0,
