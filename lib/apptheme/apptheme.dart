@@ -31,7 +31,7 @@ class AppTheme {
 
   static get _navigationBarThemeData {
     return NavigationBarThemeData(
-      labelTextStyle: MaterialStateProperty.all(CoinTextStyle.title4),
+      labelTextStyle: WidgetStateProperty.all(CoinTextStyle.title4),
       indicatorColor: CoinColors.transparent,
       backgroundColor: CoinColors.blackMedium2,
     );
@@ -40,7 +40,7 @@ class AppTheme {
   static get _elevatedButtonTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: CoinColors.orange,
+        backgroundColor: CoinColors.orange,
         fixedSize: const Size(0, 45),
       ),
     );
