@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/config.dart';
+import '../../../config/helper/common/get_user_info.dart' as common;
 
 class CouponDetail {
   final int id;
@@ -98,18 +99,15 @@ class Coupon {
   }
 
   Future<String> PurchaseCoupon(String id, String Couponid) async {
-    String url = Api.purchasecoupon + "/" + id + "/" + Couponid;
-
-    String urltest =
-        "http://127.0.0.1:7070/api/purchase_coupon/" + id + "/" + Couponid;
+    int currentUserId = await common.getUserId();
+    String safeId = currentUserId.toString();
+    String url = "${Api.purchasecoupon}/$safeId/$Couponid";
+    Map<String, String> headers = await common.getAuthHeaders();
 
     try {
-      var response = await http.get(Uri.parse(url));
+      var response = await http.get(Uri.parse(url), headers: headers);
 
       if (response.statusCode == 200) {
-        // print(jsonDecode(response.body)['data']['message']);
-        //print(jsonDecode(response.body)['Url']);
-        // print(jsonDecode(response.body));
         return jsonDecode(response.body)['data']['message'];
       } else {
         return Future.error("Server Error");

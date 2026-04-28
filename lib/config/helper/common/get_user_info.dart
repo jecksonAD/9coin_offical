@@ -8,3 +8,16 @@ Future<int> getUserId() async {
     return prefs.getInt("userId")!;
   }
 }
+
+Future<Map<String, String>> getAuthHeaders() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString("jwt");
+  String? tokenType = prefs.getString("jwtType");
+  if (token != null && tokenType != null) {
+    return {
+      "Content-Type": "application/json",
+      "Authorization": "$tokenType $token",
+    };
+  }
+  return {"Content-Type": "application/json"};
+}

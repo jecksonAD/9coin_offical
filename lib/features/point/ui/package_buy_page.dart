@@ -6,6 +6,7 @@ import 'package:ninecoin/typography/text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'in_app_webview_page.dart';
 import '../../../config/config.dart';
+import '../../../config/helper/common/get_user_info.dart';
 
 class PackageBuyPage extends StatefulWidget {
   static route(
@@ -150,11 +151,9 @@ class _PackageBuyPageState extends State<PackageBuyPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                String url = Api.buypointpackage +
-                    "/" +
-                    Userid.toString() +
-                    "/" +
-                    widget.pointpackage.data[widget.index].id.toString();
+                int currentUserId = await getUserId();
+                String url =
+                    "${Api.buypointpackage}/${currentUserId.toString()}/${widget.pointpackage.data[widget.index].id.toString()}";
                 try {
                   await Navigator.push(
                     context,

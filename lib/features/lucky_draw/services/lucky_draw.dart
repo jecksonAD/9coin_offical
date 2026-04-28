@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/config.dart';
+import '../../../config/helper/common/get_user_info.dart' as common;
 import '../../../model/luckyDraw/lucky_draw_response.dart';
 import '../../../model/luckyDraw/lucky_drawn_response.dart';
 
@@ -154,19 +155,13 @@ Future<LuckyDrawnResponse> getLuckyDrawn(String userId) async {
 
 Future<String> buyluckydraw(
     String userid, String luckydrawid, int amount) async {
-  String url = Api.buyluckydraw +
-      "/" +
-      userid +
-      "/" +
-      luckydrawid +
-      "/" +
-      amount.toString();
-  /*String url =
-      "${Api.updatePartcipants}?lucky_draw_id=$luckydrawid&participants[]=$userid";*/
-  var uri = Uri.parse(url);
-  print(url);
+  int currentUserId = await common.getUserId();
+  String safeId = currentUserId.toString();
+  String url = "${Api.buyluckydraw}/$safeId/$luckydrawid/${amount.toString()}";
+  Map<String, String> headers = await common.getAuthHeaders();
+
   try {
-    var response = await http.get(Uri.parse(url));
+    var response = await http.get(Uri.parse(url), headers: headers);
 
     if (response.statusCode == 200) {
       return json.decode(response.body)['data']['message'];
@@ -175,18 +170,6 @@ Future<String> buyluckydraw(
     }
   } catch (e) {
     return Future.error(e);
-  }
-
-  var response = await http.put(
-    uri,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  );
-  if (response.statusCode == 200 || response.statusCode == 201) {
-    return "Success";
-  } else {
-    throw json.decode(response.body)["error"];
   }
 }
 
