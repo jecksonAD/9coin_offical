@@ -7,8 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'in_app_webview_page.dart';
 import '../../../config/config.dart';
 
-import 'package:in_app_webview/in_app_webview.dart';
-
 class PackageBuyPage extends StatefulWidget {
   static route(
       {required pointpackageresponse pointpackage, required int index}) {

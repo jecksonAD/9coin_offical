@@ -23,11 +23,9 @@ class _InAppWebViewPageState extends State<InAppWebViewPage> {
       body: Stack(
         children: [
           InAppWebView(
-            initialUrlRequest: URLRequest(url: Uri.parse(widget.url)),
-            initialOptions: InAppWebViewGroupOptions(
-              crossPlatform: InAppWebViewOptions(
-                useOnDownloadStart: true,
-              ),
+            initialUrlRequest: URLRequest(url: WebUri(widget.url)),
+            initialSettings: InAppWebViewSettings(
+              useOnDownloadStart: true,
             ),
             onWebViewCreated: (controller) {
               _webViewController = controller;
@@ -42,7 +40,7 @@ class _InAppWebViewPageState extends State<InAppWebViewPage> {
                 _isLoading = false;
               });
             },
-            onDownloadStart: (controller, url) async {
+            onDownloadStartRequest: (controller, request) async {
               // Handle file downloads here if needed
             },
           ),
