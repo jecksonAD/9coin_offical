@@ -16,8 +16,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.evoweb.ninecoms"
-    compileSdk = 35
+    namespace = "com.evoweb.ninecom"
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -30,7 +30,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.evoweb.ninecoms"
+        applicationId = "com.evoweb.ninecom"
         minSdk = 34
         targetSdk = 35
         versionCode = flutter.versionCode

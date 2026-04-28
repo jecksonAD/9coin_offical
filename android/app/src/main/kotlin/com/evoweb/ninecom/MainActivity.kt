@@ -1,4 +1,4 @@
-package com.evoweb.ninecoms
+package com.evoweb.ninecom
 
 import io.flutter.embedding.android.FlutterActivity
 
