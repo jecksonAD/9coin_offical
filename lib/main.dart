@@ -27,15 +27,6 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Got a message whilst in the foreground!');
@@ -45,9 +36,26 @@ void main() async {
       print('Message also contained a notification: ${message.notification}');
     }
   });
+
   runApp(const App(
     page: 0,
   ));
+
+  // Request notification permissions after app is running to avoid racing
+  // with FirebaseMessaging.instance internal initialization.
+  try {
+    await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  } on FirebaseException catch (_) {
+    // Permission request already in progress — safe to ignore
+  }
 }
 
 class App extends StatelessWidget {
